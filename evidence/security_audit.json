@@ -1,0 +1,30 @@
+{
+  "utc": "2026-10-30T15:16:44.805704+00:00",
+  "python": "3.11.9",
+  "versions": {
+    "fastmcp": "4.1.4",
+    "mcp": "2.3.0",
+    "openai-agents": "0.24.0",
+    "openai": "3.41.0",
+    "pydantic": "2.14.2",
+    "pytest": "9.2.0",
+    "pytest-asyncio": "1.4.1"
+  },
+  "syntax_valid_python_files": 13,
+  "summary_words": 371,
+  "reflection_paragraphs": 2,
+  "actual_key_found_in_deliverables": false,
+  "secret_like_patterns_found": false,
+  "child_explicit_environment_has_api_key": false,
+  "real_env_file_in_project": false,
+  "published": false,
+  "video_recorded": false,
+  "notes": [
+    "Fresh isolated Python 3.11 environment installed current released packages; pip check passed.",
+    "Pytest report hostname removed; counts unchanged.",
+    "Dependency CVE scan and non-Windows execution are not claimed."
+  ],
+  "deliverable_file_count": 41,
+  "markdown_local_links_valid": true,
+  "git_remote_configured": false
+}

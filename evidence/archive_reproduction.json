@@ -1,0 +1,22 @@
+{
+  "execution": "EXTRACTED_SOURCE_REAL_MCP_NO_MODEL",
+  "external_working_directory_discovery": true,
+  "protocol_cases_passed": 7,
+  "temporary_store_cleaned": true,
+  "dependency_environment": "Reused the fresh isolated Python 3.11 environment used for main validation. No second installation claimed.",
+  "code_sha256": {
+    "agent_client.py": "adb2ee5161857fd6d17271e40a6788dec8f892971986f05cb039f9f30d112452",
+    "business.py": "8ccc1ea22cbd2e0514abb835979b2c8eb8d0e89e4f3f0868a61f35534291ceb9",
+    "mcp_server.py": "e8982a371a0efa41ed6656c5dd2e9379aa49faa8f54f8001d775154b39e48d89",
+    "scripts/demo_cases.py": "957c7327cc629cac407fd6985e4ed72cca4b2a3c7e11d9db26144dc796557425",
+    "scripts/inspect_records.py": "17347b8caa3db8e151727e7e07f2367d6a22ecb9a9b10757c9ddef6c3f0fc207",
+    "scripts/live_demo.py": "7ca7f6420acc5784b34f1ce800f98df17da0fe9a2fd237764ab9f6ef710c9b6c",
+    "scripts/package_submission.py": "1c2a4460511165ec44340e1c8251ce9972737c91cfc7787d842aec52c026c456",
+    "scripts/protocol_demo.py": "ff1f9075b19b57d71756fb62c3e7c4873f64d2a3e3656b154fece77eb1dd18a8",
+    "scripts/__init__.py": "8ff4258d75398349d815c9802e8327c6431d6bf905f6f66f3d7b6a971a363b0a",
+    "tests/conftest.py": "8d3dd26bdcede275e1952a90f1acd6a5985675ba9c7f1d9d4ff42e10fc48dc30",
+    "tests/test_agent.py": "f24834d7ac629dd57e3f317b55160614859deb44ed98f46fa7bff43dbebe55a8",
+    "tests/test_protocol.py": "5197ce83184817c02edb9b5a621de8fa0eae8005dff75f21cf7b0ad9e40788da",
+    "tests/__init__.py": "9b25fa6540d520bc82537f1edd26c3589d91ed71fbda06e180c42f58ada97bbc"
+  }
+}

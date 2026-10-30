@@ -1,0 +1,20 @@
+# MCP research summary
+
+<!-- SUMMARY START -->
+The Model Context Protocol (MCP) is an open interface for connecting AI applications to external capabilities. Ksenia Se's Hugging Face article motivates it through a practical limitation: models cannot independently access private business data or act on external systems. Custom integrations multiply maintenance work as applications and services change. MCP supplies a shared communication contract so compatible applications can reuse a server rather than rebuild its integration for each framework [1].
+
+The architecture separates three roles. The host contains the agent and controls its operating context and permissions. A client inside that host maintains communication with a particular server. The server exposes capabilities backed by files, databases, APIs, or local computation. These roles separate model reasoning from execution; the language model proposes a tool call, while application software carries it out. Discoverability does not mean that every server on the network becomes automatically trusted or connected.
+
+After connection and initialization, the client requests the available tools. Each definition includes a name, description, and input schema, with an optional output schema. The host supplies these definitions to its model. When the model selects a tool and arguments, the client transmits a tools/call request. The server validates the inputs, executes the operation, and returns content and, where supported, structured output. The host feeds that result back into the model's next turn [2]. MCP standardizes this boundary, while domain rules, authorization, and result quality remain implementation responsibilities.
+
+I inspected the reference Fetch server's Python implementation at the pinned revision below [3]. It exposes one fetch tool with a URL, bounded maximum output length, nonnegative starting index, and raw-content flag. It retrieves web content, simplifies HTML when requested, and returns text with source context and continuation guidance. Its similarly named prompt is separate from its tool. The implementation also checks robots policies and restricts private destinations by default.
+
+Under Chapter 5's criteria, Fetch has a focused retrieval objective, descriptive parameters, and explicit failure handling. Fetching and formatting support one user-facing responsibility, although the raw flag expands its output modes. Bounded results aid predictable consumption. However, changing websites prevent deterministic content, and textual status information is harder to validate than a typed result envelope. Retrieved material also requires treatment as untrusted data rather than executable instructions.
+<!-- SUMMARY END -->
+
+## References (excluded from main-summary word count)
+
+1. Ksenia Se, [What Is MCP, and Why Is Everyone Suddenly Talking About It?](https://huggingface.co/blog/Kseniase/mcp), 17 March 2025. The public Hugging Face post is an introduction that links to [the fuller Turing Post article](https://www.turingpost.com/p/mcp), also reviewed. Architectural details were checked against the protocol and Chapter 5, rather than attributed to text absent from the public introduction.
+2. [MCP specification: Tools](https://modelcontextprotocol.io/specification/2025-11-25/server/tools) and [MCP Python SDK client documentation](https://py.sdk.modelcontextprotocol.io/client/). The tested dependencies use SDK v2; examples from the dated specification explain the tools/list and tools/call concepts.
+3. Model Context Protocol reference servers, [Fetch server.py, revision fb31aa5ad2852ac2cb272fc7de7225547e1ed870](https://github.com/modelcontextprotocol/servers/blob/fb31aa5ad2852ac2cb272fc7de7225547e1ed870/src/fetch/src/mcp_server_fetch/server.py), especially create_server, fetch_url and check_may_autonomously_fetch_url. Inspected source, not merely README claims. This revision uses the MCP SDK's MCPServer; CedarBridge separately uses standalone FastMCP.
+4. EECE 503P/798S, Chapter 5 Notes, sections 2.3–2.5 and 6; lecture deck pp. 12–16 and 47–65, Fall 2026.

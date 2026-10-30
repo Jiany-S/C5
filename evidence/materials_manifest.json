@@ -1,0 +1,57 @@
+[
+  {
+    "file": "C5 - Agent Tools - Deck.pdf",
+    "sha256": "378269f95129bdfaa8cabcb91a6390ff139b84fd5ca2c8a13b52de2d95049ed1",
+    "pages": 69
+  },
+  {
+    "file": "C5 - Agent Tools Ass.pdf",
+    "sha256": "284147dc1a77f16f1b4091e6a8a5751d83ce86ef29cd1b7b6df377b75509e152",
+    "pages": 3
+  },
+  {
+    "file": "C5 - Agent Tools-1.pdf",
+    "sha256": "bba157c0813d8a0f8be27fda813a859824bfd2ccf8d9803161f5c369af70c03f",
+    "pages": 8
+  },
+  {
+    "file": "C5 - Agent Tools-20261030T142829Z-1-001\\C5 - Agent Tools\\1 - Requests and API Wrappers Tutorial.ipynb",
+    "sha256": "11f49d160e45dd2eee385d1ca39768fe65b8aa697ca93303f4f9ba2b00b06f2a",
+    "cells": 16
+  },
+  {
+    "file": "C5 - Agent Tools-20261030T142829Z-1-001\\C5 - Agent Tools\\2 - OpenAI Function Calling.ipynb",
+    "sha256": "a5a9712feebbd3909d07549b7e9dac2fa125e850c7436cdfdccd75feee1d286e",
+    "cells": 17
+  },
+  {
+    "file": "C5 - Agent Tools-20261030T142829Z-1-001\\C5 - Agent Tools\\3 - Data Tools Tutorial.ipynb",
+    "sha256": "d375fb8a7a2d4965e7e243a07fd0726ed63a0beda6ff40ceb76bcd6c18e0c13c",
+    "cells": 12
+  },
+  {
+    "file": "C5 - Agent Tools-20261030T142829Z-1-001\\C5 - Agent Tools\\4 - Action Tools Tutorial.ipynb",
+    "sha256": "d4c7bc0002486f60b60bf2c254a3dcd8a938736223fc6277c7651d6ed5a99d50",
+    "cells": 13
+  },
+  {
+    "file": "C5 - Agent Tools-20261030T142829Z-1-001\\C5 - Agent Tools\\5 - Orchestration Tools Tutorial.ipynb",
+    "sha256": "e7193a51974559452e5dcfe1a29b4aff5d993f3400dfb68ab0cbf49b8a8506fe",
+    "cells": 9
+  },
+  {
+    "file": "C5 - Agent Tools-20261030T142829Z-1-001\\C5 - Agent Tools\\6 - MCP Filesystem and Fetch.ipynb",
+    "sha256": "68bbd55bc6308a78aad345428ace161245a439122a4134d4479ec1cc73f256c4",
+    "cells": 19
+  },
+  {
+    "file": "C5 - Agent Tools-20261030T142829Z-1-001\\C5 - Agent Tools\\7 - Building an MCP Server and Client with an Open Source LLM.ipynb",
+    "sha256": "eb60482b4ddc33fbd1ebc353f318d219e83dff0f56c50ecd2fb4d778a585514e",
+    "cells": 12
+  },
+  {
+    "file": "C5.1 - Would You Trust This Agent_ - Deck.pdf",
+    "sha256": "4d6297f0ffe44162dd9f33dad16ff196c854edfbde8f7b6fb46ccafc124a8fa4",
+    "pages": 10
+  }
+]

@@ -1,0 +1,749 @@
+{
+  "execution": "REAL_MCP_NO_MODEL",
+  "utc": "2026-10-30T15:09:30.433370+00:00",
+  "versions": {
+    "fastmcp": "4.1.4",
+    "mcp": "2.3.0",
+    "openai-agents": "0.24.0"
+  },
+  "calls": [
+    {
+      "tool": "get_service_details",
+      "result": {
+        "schema_version": "1.0",
+        "status": "ok",
+        "code": "service_found",
+        "message": "Published fictional teaching data.",
+        "service": {
+          "name": "Project Clarity",
+          "duration_minutes": 30,
+          "price_usd": 15,
+          "price_unit": "student",
+          "max_students": 1,
+          "description": "Online project scoping consultation."
+        },
+        "record_id": null,
+        "created": false,
+        "steps": [],
+        "available_services": [],
+        "context": {
+          "business": "CedarBridge Learning Studio",
+          "fictional": true,
+          "location": "Beirut, Lebanon",
+          "delivery": "Online",
+          "languages": [
+            "English",
+            "Arabic"
+          ],
+          "service_hours": "Monday-Friday, 10:00-18:00, Asia/Beirut",
+          "follow_up": "Staff aim to respond within two business days. Recording interest is not an appointment, payment, or sent email.",
+          "boundaries": "Independent fictional coaching business; not affiliated with AUB or any university. Students bring their own work. No ghostwriting or grade guarantees. No live calendar or payment access."
+        }
+      },
+      "record_count": 0,
+      "passed": true
+    },
+    {
+      "tool": "record_service_interest",
+      "result": {
+        "schema_version": "1.0",
+        "status": "ok",
+        "code": "interest_recorded",
+        "message": "Follow-up interest saved locally. No appointment booked, payment taken, or email sent.",
+        "service": null,
+        "record_id": "d06e3b99-2098-4e86-a2bd-018beeb9fb8a",
+        "created": true,
+        "steps": [],
+        "available_services": [],
+        "context": {}
+      },
+      "record_count": 1,
+      "passed": true
+    },
+    {
+      "tool": "register_verified_service_interest",
+      "result": {
+        "schema_version": "1.0",
+        "status": "ok",
+        "code": "interest_recorded",
+        "message": "Follow-up interest saved locally. No appointment booked, payment taken, or email sent.",
+        "service": {
+          "name": "Team Sprint",
+          "duration_minutes": 90,
+          "price_usd": 60,
+          "price_unit": "team",
+          "max_students": 4,
+          "description": "Online project planning workshop for up to four students."
+        },
+        "record_id": "c95df882-529c-4bde-aaf8-11ccdea666c6",
+        "created": true,
+        "steps": [
+          {
+            "capability": "get_service_details",
+            "code": "service_found"
+          },
+          {
+            "capability": "record_service_interest",
+            "code": "interest_recorded"
+          }
+        ],
+        "available_services": [],
+        "context": {}
+      },
+      "record_count": 2,
+      "passed": true
+    },
+    {
+      "tool": "register_verified_service_interest",
+      "result": {
+        "schema_version": "1.0",
+        "status": "error",
+        "code": "unknown_service",
+        "message": "Service not found. Choose a published service.",
+        "service": null,
+        "record_id": null,
+        "created": false,
+        "steps": [
+          {
+            "capability": "get_service_details",
+            "code": "unknown_service"
+          }
+        ],
+        "available_services": [
+          "Project Clarity",
+          "Prototype Clinic",
+          "Team Sprint"
+        ],
+        "context": {}
+      },
+      "record_count": 2,
+      "passed": true
+    },
+    {
+      "tool": "record_service_interest",
+      "result": {
+        "schema_version": "1.0",
+        "status": "ok",
+        "code": "already_recorded",
+        "message": "Existing interest retained; no new record or update. No appointment booked, payment taken, or email sent.",
+        "service": null,
+        "record_id": "d06e3b99-2098-4e86-a2bd-018beeb9fb8a",
+        "created": false,
+        "steps": [],
+        "available_services": [],
+        "context": {}
+      },
+      "record_count": 2,
+      "passed": true
+    },
+    {
+      "tool": "record_service_interest",
+      "result": {
+        "schema_version": "1.0",
+        "status": "error",
+        "code": "invalid_input",
+        "message": "Provide a name (1-100 characters), valid ASCII email, and notes (1-1000 characters).",
+        "service": null,
+        "record_id": null,
+        "created": false,
+        "steps": [],
+        "available_services": [],
+        "context": {}
+      },
+      "record_count": 2,
+      "passed": true
+    },
+    {
+      "tool": "register_verified_service_interest",
+      "result": {
+        "schema_version": "1.0",
+        "status": "skipped",
+        "code": "consent_required",
+        "message": "Service verified. No record saved: explicit follow-up request required.",
+        "service": {
+          "name": "Project Clarity",
+          "duration_minutes": 30,
+          "price_usd": 15,
+          "price_unit": "student",
+          "max_students": 1,
+          "description": "Online project scoping consultation."
+        },
+        "record_id": null,
+        "created": false,
+        "steps": [
+          {
+            "capability": "get_service_details",
+            "code": "service_found"
+          }
+        ],
+        "available_services": [],
+        "context": {}
+      },
+      "record_count": 2,
+      "passed": true
+    }
+  ],
+  "tools": [
+    {
+      "name": "get_service_details",
+      "title": "Get Service Details",
+      "description": "DATA: Read published CedarBridge service facts. Returns service_found or unknown_service; never saves records.",
+      "inputSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "service_name": {
+            "description": "Published service: Project Clarity, Prototype Clinic, or Team Sprint; case-insensitive.",
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "service_name"
+        ]
+      },
+      "execution": null,
+      "outputSchema": {
+        "additionalProperties": false,
+        "description": "Stable v1 envelope. Error/skipped results never imply successful persistence.",
+        "properties": {
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "ok",
+              "error",
+              "skipped"
+            ],
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "service": {
+            "anyOf": [
+              {
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "duration_minutes": {
+                    "type": "integer"
+                  },
+                  "price_usd": {
+                    "type": "integer"
+                  },
+                  "price_unit": {
+                    "type": "string"
+                  },
+                  "max_students": {
+                    "type": "integer"
+                  },
+                  "description": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "duration_minutes",
+                  "price_usd",
+                  "price_unit",
+                  "max_students",
+                  "description"
+                ],
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "record_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "created": {
+            "default": false,
+            "type": "boolean"
+          },
+          "steps": {
+            "default": [],
+            "items": {
+              "properties": {
+                "capability": {
+                  "enum": [
+                    "get_service_details",
+                    "record_service_interest"
+                  ],
+                  "type": "string"
+                },
+                "code": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "capability",
+                "code"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "available_services": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "context": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "boolean"
+                },
+                {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              ]
+            },
+            "default": {},
+            "type": "object"
+          }
+        },
+        "required": [
+          "status",
+          "code",
+          "message"
+        ],
+        "type": "object"
+      },
+      "icons": null,
+      "annotations": {
+        "title": null,
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "fastmcp": {
+          "tags": []
+        }
+      }
+    },
+    {
+      "name": "record_service_interest",
+      "title": "Record Service Interest",
+      "description": "ACTION: Save explicit follow-up interest locally for an already selected service. Requires consent. Repeated email/service returns the existing record ID without updating. Never books or sends email.",
+      "inputSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "description": "Customer-supplied name; use fictional data in demos.",
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string"
+          },
+          "email": {
+            "description": "Customer-supplied ASCII contact email; no deliverability verification.",
+            "maxLength": 254,
+            "minLength": 3,
+            "type": "string"
+          },
+          "service_name": {
+            "description": "Published service: Project Clarity, Prototype Clinic, or Team Sprint; case-insensitive.",
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string"
+          },
+          "notes": {
+            "description": "Customer-supplied project context; do not include sensitive data.",
+            "maxLength": 1000,
+            "minLength": 1,
+            "type": "string"
+          },
+          "follow_up_requested": {
+            "description": "True only when the user explicitly requests follow-up; informational questions are false.",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "name",
+          "email",
+          "service_name",
+          "notes",
+          "follow_up_requested"
+        ]
+      },
+      "execution": null,
+      "outputSchema": {
+        "additionalProperties": false,
+        "description": "Stable v1 envelope. Error/skipped results never imply successful persistence.",
+        "properties": {
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "ok",
+              "error",
+              "skipped"
+            ],
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "service": {
+            "anyOf": [
+              {
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "duration_minutes": {
+                    "type": "integer"
+                  },
+                  "price_usd": {
+                    "type": "integer"
+                  },
+                  "price_unit": {
+                    "type": "string"
+                  },
+                  "max_students": {
+                    "type": "integer"
+                  },
+                  "description": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "duration_minutes",
+                  "price_usd",
+                  "price_unit",
+                  "max_students",
+                  "description"
+                ],
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "record_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "created": {
+            "default": false,
+            "type": "boolean"
+          },
+          "steps": {
+            "default": [],
+            "items": {
+              "properties": {
+                "capability": {
+                  "enum": [
+                    "get_service_details",
+                    "record_service_interest"
+                  ],
+                  "type": "string"
+                },
+                "code": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "capability",
+                "code"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "available_services": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "context": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "boolean"
+                },
+                {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              ]
+            },
+            "default": {},
+            "type": "object"
+          }
+        },
+        "required": [
+          "status",
+          "code",
+          "message"
+        ],
+        "type": "object"
+      },
+      "icons": null,
+      "annotations": {
+        "title": null,
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "fastmcp": {
+          "tags": []
+        }
+      }
+    },
+    {
+      "name": "register_verified_service_interest",
+      "title": "Register Verified Service Interest",
+      "description": "ORCHESTRATION: Verify a service with the Data capability, then use the Action capability only with explicit follow-up consent. Returns actual ordered steps and stops before saving on lookup failure. Use for verify-then-register requests.",
+      "inputSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "description": "Customer-supplied name; use fictional data in demos.",
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string"
+          },
+          "email": {
+            "description": "Customer-supplied ASCII contact email; no deliverability verification.",
+            "maxLength": 254,
+            "minLength": 3,
+            "type": "string"
+          },
+          "service_name": {
+            "description": "Published service: Project Clarity, Prototype Clinic, or Team Sprint; case-insensitive.",
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string"
+          },
+          "notes": {
+            "description": "Customer-supplied project context; do not include sensitive data.",
+            "maxLength": 1000,
+            "minLength": 1,
+            "type": "string"
+          },
+          "follow_up_requested": {
+            "description": "True only when the user explicitly requests follow-up; informational questions are false.",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "name",
+          "email",
+          "service_name",
+          "notes",
+          "follow_up_requested"
+        ]
+      },
+      "execution": null,
+      "outputSchema": {
+        "additionalProperties": false,
+        "description": "Stable v1 envelope. Error/skipped results never imply successful persistence.",
+        "properties": {
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "ok",
+              "error",
+              "skipped"
+            ],
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "service": {
+            "anyOf": [
+              {
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "duration_minutes": {
+                    "type": "integer"
+                  },
+                  "price_usd": {
+                    "type": "integer"
+                  },
+                  "price_unit": {
+                    "type": "string"
+                  },
+                  "max_students": {
+                    "type": "integer"
+                  },
+                  "description": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "duration_minutes",
+                  "price_usd",
+                  "price_unit",
+                  "max_students",
+                  "description"
+                ],
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "record_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "created": {
+            "default": false,
+            "type": "boolean"
+          },
+          "steps": {
+            "default": [],
+            "items": {
+              "properties": {
+                "capability": {
+                  "enum": [
+                    "get_service_details",
+                    "record_service_interest"
+                  ],
+                  "type": "string"
+                },
+                "code": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "capability",
+                "code"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "available_services": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "context": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "boolean"
+                },
+                {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              ]
+            },
+            "default": {},
+            "type": "object"
+          }
+        },
+        "required": [
+          "status",
+          "code",
+          "message"
+        ],
+        "type": "object"
+      },
+      "icons": null,
+      "annotations": {
+        "title": null,
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "fastmcp": {
+          "tags": []
+        }
+      }
+    }
+  ],
+  "client_closed": true,
+  "passed": true
+}

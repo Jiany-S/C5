@@ -1,0 +1,79 @@
+1
+00:00:00,000 --> 00:00:25,000
+CedarBridge C5 MCP Toolkit
+Data reads. Action records. Orchestration verifies then records.
+
+2
+00:00:25,000 --> 00:00:45,000
+The host contains the agent and the MCP client.
+The FastMCP server runs as a separate Python process.
+
+3
+00:00:45,000 --> 00:01:05,000
+The client discovers schemas over stdio.
+The OpenAI model selects a tool; the SDK invokes it through MCP.
+
+4
+00:01:05,000 --> 00:01:30,000
+Exactly three registered tools.
+These names come from the running server's actual discovery response.
+
+5
+00:01:30,000 --> 00:02:00,000
+DATA: Project Clarity costs $15 for 30 minutes online.
+The store still contains zero records.
+
+6
+00:02:00,000 --> 00:02:25,000
+ACTION: An explicit follow-up request creates a real local record.
+The tool returns its committed record ID.
+
+7
+00:02:25,000 --> 00:02:45,000
+The read-only database query confirms one saved row.
+No appointment is booked and no email is sent.
+
+8
+00:02:45,000 --> 00:03:10,000
+ORCHESTRATION: Look up Team Sprint, then record the interest.
+The result shows the actual ordered capability outcomes.
+
+9
+00:03:10,000 --> 00:03:35,000
+One outer MCP call coordinates two internal Python capabilities.
+The database now contains two records.
+
+10
+00:03:35,000 --> 00:04:10,000
+FAILURE: Moon Camp is unknown.
+Lookup failure stops the write. Record count remains two.
+
+11
+00:04:10,000 --> 00:04:45,000
+RETRY: The same email and service return the existing ID.
+Atomic database uniqueness prevents duplicate rows across server runs.
+
+12
+00:04:45,000 --> 00:05:05,000
+An informational question does not authorize saving contact details.
+The Data tool remains read-only.
+
+13
+00:05:05,000 --> 00:05:20,000
+An invalid email triggers clarification in this live scenario.
+Separate protocol tests prove server-side rejection too.
+
+14
+00:05:20,000 --> 00:05:40,000
+33 automated tests passed.
+Real OpenAI checks and scripted-model SDK tests are labeled separately.
+
+15
+00:05:40,000 --> 00:06:00,000
+Challenges: safe retries, precise result interpretation and Windows file closure.
+Constraints, live checks and a regression test addressed them.
+
+16
+00:06:00,000 --> 00:06:20,000
+The repository includes source, research, setup, tests and reflection.
+Future work: authenticated consent, retention and structured final answers.

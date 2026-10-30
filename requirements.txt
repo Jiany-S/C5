@@ -1,0 +1,7 @@
+# Current releases resolved and tested on 2026-10-30, Python 3.11.
+fastmcp==4.1.4
+mcp==2.3.0
+openai-agents==0.24.0
+openai==3.41.0
+pydantic==2.14.2
+python-dotenv==1.2.4

@@ -1,0 +1,15 @@
+{
+  "business": "CedarBridge Learning Studio",
+  "fictional": true,
+  "location": "Beirut, Lebanon",
+  "delivery": "Online",
+  "languages": ["English", "Arabic"],
+  "service_hours": "Monday-Friday, 10:00-18:00, Asia/Beirut",
+  "follow_up": "Staff aim to respond within two business days. Recording interest is not an appointment, payment, or sent email.",
+  "boundaries": "Independent fictional coaching business; not affiliated with AUB or any university. Students bring their own work. No ghostwriting or grade guarantees. No live calendar or payment access.",
+  "services": [
+    {"name": "Project Clarity", "duration_minutes": 30, "price_usd": 15, "price_unit": "student", "max_students": 1, "description": "Online project scoping consultation."},
+    {"name": "Prototype Clinic", "duration_minutes": 60, "price_usd": 30, "price_unit": "student", "max_students": 1, "description": "Online debugging and testing coaching session."},
+    {"name": "Team Sprint", "duration_minutes": 90, "price_usd": 60, "price_unit": "team", "max_students": 4, "description": "Online project planning workshop for up to four students."}
+  ]
+}
