@@ -28,7 +28,7 @@ The host is this Python application plus the Agents SDK runtime. `MCPServerStdio
 
 The server has exactly three decorated functions. They delegate to ordinary functions in `business.py`. The orchestration function calls the same lookup and persistence functions used by the other two tools. These are real internal Python calls, **not two nested MCP round trips**. The agent's invocation of the orchestrator is one real MCP call. Its `steps` are populated after those functions return, and its result exposes their actual outcome codes. This is the sharing of underlying business functions permitted by the task.
 
-Stdio avoids hosting, ports and extra credentials. Server stdout contains only protocol traffic; business events go to stderr with server PID, capability, outcome and record ID. The client's observer awaits `super().call_tool(...)` before printing received results. Thus its arrows label actual boundary events, although they are not a raw packet capture. Saved SQLite rows provide independent proof of side effects. No extra MCP tools or resources are required.
+Stdio avoids hosting, ports and extra credentials. Server stdout contains only protocol traffic. Compact mode prints a labeled client receipt after the observer awaits `super().call_tool(...)`; `--trace` additionally enables server stderr events with PID, capability, outcome and record ID plus client raw JSON. Thus the arrows label actual boundary events, although they are not a raw packet capture. Saved SQLite rows provide independent proof of side effects. Local slash commands belong to the operator interface; they are not extra agent-callable MCP tools. No extra MCP tools or resources are required.
 
 ## State and safety
 

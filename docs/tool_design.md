@@ -12,7 +12,7 @@ The Action tool's service-membership check is a write invariant, not a second fu
 
 ## Inputs
 
-All fields are required. Service name is 1–100 characters, matched case-insensitively with collapsed whitespace. Name is 1–100 characters; notes are 1–1000 characters, nonempty after stripping. Email is 3–254 characters, normalized to lowercase and checked using a documented conservative ASCII pattern: one `@`, dotted domain, alphabetic suffix, no consecutive dots. This is syntax validation, not proof of ownership or deliverability; internationalized or unusual valid addresses may be rejected. Consent must be a JSON Boolean; strings such as `"yes"` must fail schema validation. Missing/incorrect types or length violations produce MCP validation errors before business code executes.
+All fields are required. Service name is 1–100 characters, matched case-insensitively with collapsed whitespace. Name is 1–100 characters; notes are 1–1000 characters, nonempty after stripping. Email is 3–254 characters, normalized to lowercase and checked using a documented conservative ASCII pattern: one `@`, dotted domain, alphabetic suffix, no consecutive dots, and at most 63 characters per domain label. This is syntax validation, not proof of ownership or deliverability; internationalized or unusual valid addresses may be rejected. Consent must be a JSON Boolean; strings such as `"yes"` must fail schema validation. Missing/incorrect types or length violations produce MCP validation errors before business code executes.
 
 ## Output
 

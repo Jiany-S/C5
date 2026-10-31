@@ -65,7 +65,7 @@ Separate protocol tests prove server-side rejection too.
 
 14
 00:05:20,000 --> 00:05:40,000
-33 automated tests passed.
+49 automated tests passed.
 Real OpenAI checks and scripted-model SDK tests are labeled separately.
 
 15

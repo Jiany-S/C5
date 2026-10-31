@@ -1,0 +1,325 @@
+{
+  "execution": "REAL_OPENAI_MODEL_REAL_MCP",
+  "run_id": "2d4bb4fb-7fd6-443e-aaf7-b0ac05422e51",
+  "state": "completed",
+  "passed": true,
+  "utc": "2026-10-31T15:46:08.060523+00:00",
+  "model": "gpt-4.1-mini",
+  "versions": {
+    "fastmcp": "4.1.4",
+    "mcp": "2.3.0",
+    "openai-agents": "0.24.0",
+    "openai": "3.41.0"
+  },
+  "data_dir": "runtime\\demo-2d4bb4fb",
+  "cases": [
+    {
+      "id": "data",
+      "prompt": "What does Project Clarity cost, how long is it, and how is it delivered? I only want information.",
+      "events": [
+        {
+          "tool": "get_service_details",
+          "result": {
+            "schema_version": "1.0",
+            "status": "ok",
+            "code": "service_found",
+            "message": "Published fictional teaching data.",
+            "service": {
+              "name": "Project Clarity",
+              "duration_minutes": 30,
+              "price_usd": 15,
+              "price_unit": "student",
+              "max_students": 1,
+              "description": "Online project scoping consultation."
+            },
+            "record_id": null,
+            "created": false,
+            "steps": [],
+            "available_services": [],
+            "context": {
+              "business": "CedarBridge Learning Studio",
+              "fictional": true,
+              "location": "Beirut, Lebanon",
+              "delivery": "Online",
+              "languages": [
+                "English",
+                "Arabic"
+              ],
+              "service_hours": "Monday-Friday, 10:00-18:00, Asia/Beirut",
+              "follow_up": "Staff aim to respond within two business days. Recording interest is not an appointment, payment, or sent email.",
+              "boundaries": "Independent fictional coaching business; not affiliated with AUB or any university. Students bring their own work. No ghostwriting or grade guarantees. No live calendar or payment access."
+            }
+          },
+          "is_error": false
+        }
+      ],
+      "answer": "Project Clarity is an online project scoping consultation delivered in English or Arabic. It lasts 30 minutes and costs $15 per student. The service is conducted online, and staff aim to respond within two business days for follow-up inquiries. \n\nIf you want more details or have other questions, feel free to ask!",
+      "record_count": 0,
+      "checks": {
+        "record_count": true,
+        "no_protocol_error": true,
+        "no_affirmative_booking_or_email": true,
+        "selected_tool_and_code": true,
+        "only_read_tool_used": true,
+        "answer_grounded_price": true,
+        "answer_grounded_duration": true,
+        "no_new_record": true
+      },
+      "passed": true
+    },
+    {
+      "id": "action",
+      "prompt": "I have already chosen Project Clarity. Please record my interest for follow-up. My name is Demo Student, email demo@example.com, and my project notes are: Scope a Python study planner.",
+      "events": [
+        {
+          "tool": "record_service_interest",
+          "result": {
+            "schema_version": "1.0",
+            "status": "ok",
+            "code": "interest_recorded",
+            "message": "Follow-up interest saved locally. Record ID: 06a91509-e83a-4226-8b16-c7f253df1aba. No appointment booked, payment taken, or email sent.",
+            "service": null,
+            "record_id": "06a91509-e83a-4226-8b16-c7f253df1aba",
+            "created": true,
+            "steps": [],
+            "available_services": [],
+            "context": {}
+          },
+          "is_error": false
+        }
+      ],
+      "answer": "Your follow-up interest in Project Clarity has been recorded with the notes about scoping a Python study planner. No appointment was booked, no payment taken, and no email was sent. Staff aim to reply within two business days.\n\nRecord ID: 06a91509-e83a-4226-8b16-c7f253df1aba.",
+      "record_count": 1,
+      "checks": {
+        "record_count": true,
+        "no_protocol_error": true,
+        "no_affirmative_booking_or_email": true,
+        "selected_tool_and_code": true,
+        "answer_includes_actual_record_id": true,
+        "persisted_record_id_matches": true,
+        "no_booking_or_email_claim": true
+      },
+      "passed": true
+    },
+    {
+      "id": "orchestration",
+      "prompt": "First verify that Team Sprint is a published service, then register my interest for follow-up in that service. My name is Demo Team, email team@example.com, notes: Plan a four-student campus app sprint.",
+      "events": [
+        {
+          "tool": "register_verified_service_interest",
+          "result": {
+            "schema_version": "1.0",
+            "status": "ok",
+            "code": "interest_recorded",
+            "message": "Follow-up interest saved locally. Record ID: adff1426-3980-42b4-9032-ac3cdf96e803. No appointment booked, payment taken, or email sent.",
+            "service": {
+              "name": "Team Sprint",
+              "duration_minutes": 90,
+              "price_usd": 60,
+              "price_unit": "team",
+              "max_students": 4,
+              "description": "Online project planning workshop for up to four students."
+            },
+            "record_id": "adff1426-3980-42b4-9032-ac3cdf96e803",
+            "created": true,
+            "steps": [
+              {
+                "capability": "get_service_details",
+                "code": "service_found"
+              },
+              {
+                "capability": "record_service_interest",
+                "code": "interest_recorded"
+              }
+            ],
+            "available_services": [],
+            "context": {}
+          },
+          "is_error": false
+        }
+      ],
+      "answer": "Team Sprint is a published service described as an online project planning workshop for up to four students, lasting 90 minutes and priced at 60 USD per team.\n\nYour interest for follow-up in the Team Sprint service has been registered with the notes: \"Plan a four-student campus app sprint.\" No appointment was booked, no payment was taken, and no email was sent.\n\nRecord ID: adff1426-3980-42b4-9032-ac3cdf96e803.",
+      "record_count": 2,
+      "checks": {
+        "record_count": true,
+        "no_protocol_error": true,
+        "no_affirmative_booking_or_email": true,
+        "selected_tool_and_code": true,
+        "answer_includes_actual_record_id": true,
+        "persisted_record_id_matches": true,
+        "no_booking_or_email_claim": true
+      },
+      "passed": true
+    },
+    {
+      "id": "unknown",
+      "prompt": "First verify that Moon Camp is a published service, then register my follow-up interest only if it exists. My name is Demo Moon, email moon@example.com, notes: Explore a space-themed project.",
+      "events": [
+        {
+          "tool": "register_verified_service_interest",
+          "result": {
+            "schema_version": "1.0",
+            "status": "error",
+            "code": "unknown_service",
+            "message": "Service not found. Choose a published service.",
+            "service": null,
+            "record_id": null,
+            "created": false,
+            "steps": [
+              {
+                "capability": "get_service_details",
+                "code": "unknown_service"
+              }
+            ],
+            "available_services": [
+              "Project Clarity",
+              "Prototype Clinic",
+              "Team Sprint"
+            ],
+            "context": {}
+          },
+          "is_error": false
+        }
+      ],
+      "answer": "The service \"Moon Camp\" is not a published service. The available published services are Project Clarity, Prototype Clinic, and Team Sprint. If you want, I can help you register your follow-up interest for one of these services instead.",
+      "record_count": 2,
+      "checks": {
+        "record_count": true,
+        "no_protocol_error": true,
+        "no_affirmative_booking_or_email": true,
+        "selected_tool_and_code": true,
+        "no_new_record": true,
+        "unknown_service_explained": true,
+        "no_successful_record_claim": true
+      },
+      "passed": true
+    },
+    {
+      "id": "repeat",
+      "prompt": "I have already chosen Project Clarity. Please record my interest for follow-up again. My name is Demo Student, email demo@example.com, notes: Scope a Python study planner. If already recorded, tell me the existing record ID.",
+      "events": [
+        {
+          "tool": "register_verified_service_interest",
+          "result": {
+            "schema_version": "1.0",
+            "status": "ok",
+            "code": "already_recorded",
+            "message": "Existing interest retained; no new record or update. Record ID: 06a91509-e83a-4226-8b16-c7f253df1aba. No appointment booked, payment taken, or email sent.",
+            "service": {
+              "name": "Project Clarity",
+              "duration_minutes": 30,
+              "price_usd": 15,
+              "price_unit": "student",
+              "max_students": 1,
+              "description": "Online project scoping consultation."
+            },
+            "record_id": "06a91509-e83a-4226-8b16-c7f253df1aba",
+            "created": false,
+            "steps": [
+              {
+                "capability": "get_service_details",
+                "code": "service_found"
+              },
+              {
+                "capability": "record_service_interest",
+                "code": "already_recorded"
+              }
+            ],
+            "available_services": [],
+            "context": {}
+          },
+          "is_error": false
+        }
+      ],
+      "answer": "Your follow-up interest for Project Clarity has already been recorded with the existing record ID 06a91509-e83a-4226-8b16-c7f253df1aba. No appointment was booked, no payment taken, and no email sent. If you need anything else, just let me know!",
+      "record_count": 2,
+      "checks": {
+        "record_count": true,
+        "no_protocol_error": true,
+        "no_affirmative_booking_or_email": true,
+        "selected_tool_and_code": true,
+        "answer_includes_actual_record_id": true,
+        "persisted_record_id_matches": true,
+        "no_booking_or_email_claim": true,
+        "no_new_record": true,
+        "same_original_record_id": true
+      },
+      "passed": true
+    },
+    {
+      "id": "information_with_contact",
+      "prompt": "My name is Info Only and my email is info@example.com. How much is Prototype Clinic? This is only an informational question; do not record my details or request follow-up.",
+      "events": [
+        {
+          "tool": "get_service_details",
+          "result": {
+            "schema_version": "1.0",
+            "status": "ok",
+            "code": "service_found",
+            "message": "Published fictional teaching data.",
+            "service": {
+              "name": "Prototype Clinic",
+              "duration_minutes": 60,
+              "price_usd": 30,
+              "price_unit": "student",
+              "max_students": 1,
+              "description": "Online debugging and testing coaching session."
+            },
+            "record_id": null,
+            "created": false,
+            "steps": [],
+            "available_services": [],
+            "context": {
+              "business": "CedarBridge Learning Studio",
+              "fictional": true,
+              "location": "Beirut, Lebanon",
+              "delivery": "Online",
+              "languages": [
+                "English",
+                "Arabic"
+              ],
+              "service_hours": "Monday-Friday, 10:00-18:00, Asia/Beirut",
+              "follow_up": "Staff aim to respond within two business days. Recording interest is not an appointment, payment, or sent email.",
+              "boundaries": "Independent fictional coaching business; not affiliated with AUB or any university. Students bring their own work. No ghostwriting or grade guarantees. No live calendar or payment access."
+            }
+          },
+          "is_error": false
+        }
+      ],
+      "answer": "The Prototype Clinic service is an online debugging and testing coaching session lasting 60 minutes. The price is $30 USD per student. If you have any other questions, feel free to ask!",
+      "record_count": 2,
+      "checks": {
+        "record_count": true,
+        "no_protocol_error": true,
+        "no_affirmative_booking_or_email": true,
+        "selected_tool_and_code": true,
+        "only_read_tool_used": true,
+        "answer_grounded_price": true,
+        "no_new_record": true
+      },
+      "passed": true
+    },
+    {
+      "id": "invalid_email",
+      "prompt": "Please record follow-up interest in Project Clarity. My name is Invalid Demo, email not-an-email, notes: Plan my project. Do not guess or correct my email.",
+      "events": [],
+      "answer": "To record your follow-up interest in Project Clarity, I need a valid email address format. The email you provided, \"not-an-email,\" does not appear to be valid. Could you please provide a valid email address?",
+      "record_count": 2,
+      "checks": {
+        "record_count": true,
+        "no_protocol_error": true,
+        "no_affirmative_booking_or_email": true,
+        "no_new_record": true,
+        "clarification_requested": true
+      },
+      "passed": true
+    }
+  ],
+  "prose_checks": "Heuristic checks; manually review final answers before submission.",
+  "tools": [
+    "get_service_details",
+    "record_service_interest",
+    "register_verified_service_interest"
+  ],
+  "finished_utc": "2026-10-31T15:46:38.458576+00:00"
+}

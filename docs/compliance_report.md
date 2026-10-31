@@ -1,6 +1,6 @@
 # Strict final review
 
-Reviewed 2026-10-30 after re-reading all three pages of the authoritative assignment. This is an assistant's self-assessment, not an independent human review or a professor-issued grade. Published requirements are separated from the additional engineering checks requested by the user.
+Re-reviewed 2026-10-31 after re-reading all three pages of the authoritative assignment. This is an assistant's self-assessment, not an independent human review or a professor-issued grade. Published requirements are separated from the additional engineering checks requested by the user.
 
 **Outcome:** the local implementation, written deliverables, real MCP verification and live agent demonstration are prepared. The overall submission is **PARTIAL** until the actual 5–7-minute video is recorded, uploaded and submitted with a published accessible code repository. A plan or JSON log does not substitute for the video.
 
@@ -24,7 +24,7 @@ Reviewed 2026-10-30 after re-reading all three pages of the authoritative assign
 | FastMCP server | `mcp_server.py`, `FastMCP(...)` and `run(transport="stdio")` | Actual server process used in all protocol and live tests | PASS | None |
 | OpenAI Agents SDK host/client | `agent_client.py:make_server`, `make_agent`, `cli` | `Agent(mcp_servers=[server])`, `Runner.run`, actual SDK connection; no local function tools | PASS | None |
 | Agent routes requests through MCP | `ObservableMCPServer.call_tool` awaits SDK super-method | Final live Data/Action/Orchestration cases selected distinct tools and returned actual results | PASS | None |
-| Functional tests including failures | `tests/test_protocol.py`, `tests/test_agent.py`, `scripts/protocol_demo.py` | 33 passed, 1 opt-in live test skipped in ordinary suite; 7/7 separate real live cases | PASS | Skipped ordinary live test is not presented as an API execution |
+| Functional tests including failures | `tests/test_protocol.py`, `tests/test_agent.py`, `scripts/protocol_demo.py` | 49 passed, 1 opt-in live test skipped in ordinary suite; 7/7 separate real live cases | PASS | Skipped ordinary live test is not presented as an API execution |
 | Configuration and README | `README.md`, `.env.example`, requirements files | Fresh isolated Python 3.11 installation; `pip check` passed | PASS | Windows tested; other OSes not claimed as executed |
 | Written summary and source deliverables | Standalone C5 source, docs and ZIP | File inventory, ZIP integrity and extracted-copy MCP discovery/protocol verification | PASS | Rebuild ZIP after adding real submission links |
 | Reflection, 1–2 paragraphs | `docs/reflection.md` | Two paragraphs; real observed decisions/challenges and next steps | PASS | Student should review and adapt to their own understanding |
@@ -74,7 +74,7 @@ Reviewed 2026-10-30 after re-reading all three pages of the authoritative assign
 
 ## Evidence interpretation and corrections made
 
-`evidence/pytest.xml` contains the final 33 passed / 1 skipped run. Its hostname attribute was removed for privacy; counts and test results were not changed. The skip is the explicitly opt-in paid test. `evidence/live_agent.json` separately records a real `gpt-4.1-mini` run with seven passed scenarios. `evidence/protocol.json` records seven real MCP calls without a model and successful connection closure. Initial live JSON reports remain available and are not counted as final passes.
+`evidence/pytest.xml` contains the final 49 passed / 1 skipped run, retained as generated. The skip is the explicitly opt-in paid test. `evidence/live_agent.json` separately records a real `gpt-4.1-mini` run with seven passed scenarios. `evidence/protocol.json` records seven real MCP calls without a model and successful connection closure. Initial live JSON reports remain available and are not counted as final passes. The dated `security_audit.json` and `archive_reproduction.json` describe the initial 2026-10-30 build; `review_validation.md` records the additional 2026-10-31 checks without rewriting those historical snapshots.
 
 Early runs exposed a wrong FastMCP environment value, a test helper's `name` collision, and an unclosed SQLite handle on Windows. The first two were corrected; explicit `closing(...)` and a regression test resolved the handle issue. Early live responses overstated the staff response target or omitted the duplicate UUID. Instructions now require bounded wording, and the repeat prompt explicitly requests the ID. Repeated requests sometimes select orchestration even when the shorter Action route would suffice. That route is semantically safe, so the retry evaluation accepts either while requiring the same existing ID and unchanged count; it does not relax the dedicated tool-category scenarios.
 
@@ -83,3 +83,24 @@ Early runs exposed a wrong FastMCP environment value, a test helper's `name` col
 The implementation is strong for this assignment: real interoperable transport, minimal local dependencies beyond the required frameworks, clear business boundaries, meaningful concurrency/failure tests, traceable research and honest evidence. The principal design cost is overlap between recording and verified recording. Explaining that tradeoff is preferable to claiming perfect model routing. The local Boolean consent gate and conservative email syntax are appropriate demonstration constraints, but they are not production authorization or identity verification.
 
 I would assess the **technical and written work as high quality**, without inventing numerical weights or a professor's rubric. I would **not mark the full assignment complete or estimate a final course grade** before seeing the mandatory video and accessible submission links. Those deliverables remain substantive outstanding requirements.
+
+
+## Independent review and interface refinements (2026-10-31)
+
+A separate subagent re-read the actual assignment, reviewed the implementation and CLI, and independently ran focused checks. Its final technical/written assessment was approximately **95/100 unofficially**, with no remaining code blocker; this does not grade the missing mandatory video or invent a professor rubric. See `independent_review.md` for findings and resolutions.
+
+Corrections added a clear welcome and commands, compact actual MCP receipts, optional schemas/raw tracing, safe categorized errors and per-turn recovery. Shared configuration fixes inspector directory mismatches. Domain labels longer than 63 characters are rejected. Live evidence now uses atomic per-run snapshots and preserves failure/cancellation instead of leaving stale success. Evaluation rejects contradictory external-effect claims and incorrect price substrings, and checks persisted/retry IDs. The final suite contains 49 passes and one opt-in paid skip; the separate fresh real OpenAI demo passed seven scenarios.
+
+The first revised live run was 5/7 because model answers omitted two IDs despite correct writes and visible receipts. That report remains unchanged. Making IDs explicit in both the Action message and final-answer instruction yielded the subsequent 7/7 run. Primary review of all seven final answers confirmed facts, IDs and failure wording; automated prose checks remain heuristics. The actual multi-turn CLI check also succeeded at state/persistence behavior, though its initial route-specific probe expected Action and observed the semantically valid Orchestration route; both facts are retained in `evidence/interactive_cli.json`.
+
+| Revised check | Evidence | Status |
+|---|---|---|
+| CLI onboarding, commands, recovery and safe errors | `tests/test_cli.py`; `docs/interface_review.md` | PASS |
+| Inspector shell/.env/project-relative consistency | `test_inspector_uses_dotenv_and_project_relative_paths` | PASS |
+| 63/64-character email domain boundary | `tests/test_protocol.py` | PASS |
+| No stale passing evidence after failure/cancellation | `tests/test_demo.py` | PASS |
+| Contradictory prose / $150 versus $15 rejected | `tests/test_demo.py`; `scripts/demo_checks.py` | PASS for specified counterexamples |
+| Fresh live model and real MCP with final code | `evidence/live_agent_review_final.json` | PASS, 7/7 |
+| 60- and 80-column terminal layout | `docs/images/terminal-60.png`, `terminal-80.png` | PASS, visual exports reviewed |
+
+The overall assignment remains PARTIAL until the original mandatory screencast and accessible repository/video links are supplied.

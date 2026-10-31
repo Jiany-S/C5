@@ -8,13 +8,12 @@ import re
 import sqlite3
 from contextlib import closing
 from datetime import datetime, timezone
-from pathlib import Path
 from typing import Literal
 from uuid import uuid4
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
+from config import ROOT, data_directory
 
-ROOT = Path(__file__).resolve().parent
 LOGGER = logging.getLogger("cedarbridge")
 
 
@@ -42,9 +41,9 @@ class ToolResult(BaseModel):
     service: Service | None = None
     record_id: str | None = None
     created: bool = False
-    steps: list[Step] = []
-    available_services: list[str] = []
-    context: dict[str, str | bool | list[str]] = {}
+    steps: list[Step] = Field(default_factory=list)
+    available_services: list[str] = Field(default_factory=list)
+    context: dict[str, str | bool | list[str]] = Field(default_factory=dict)
 
 
 CATALOG = json.loads((ROOT / "business_data" / "services.json").read_text(encoding="utf-8"))
@@ -70,11 +69,6 @@ def lookup_service(service_name: str) -> ToolResult:
     return result
 
 
-def data_directory() -> Path:
-    directory = Path(os.environ.get("CEDARBRIDGE_DATA_DIR", "runtime"))
-    return directory if directory.is_absolute() else ROOT / directory
-
-
 def record_interest(name: str, email: str, service_name: str, notes: str,
                     follow_up_requested: bool) -> ToolResult:
     """Insert at most one lead per normalized email/service, atomically across processes."""
@@ -88,7 +82,7 @@ def record_interest(name: str, email: str, service_name: str, notes: str,
     # Deliberately conservative ASCII email syntax; no network or deliverability check.
     valid_email = (len(email) <= 254 and re.fullmatch(
         r"[a-z0-9](?:[a-z0-9.!#$%&'*+/=?^_`{|}~-]*[a-z0-9])?@"
-        r"(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z]{2,63}", email)
+        r"(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}", email)
         and ".." not in email and ".@" not in email)
     if not (1 <= len(name) <= 100 and 1 <= len(notes) <= 1000 and valid_email):
         return finish(ToolResult(status="error", code="invalid_input",
@@ -118,7 +112,7 @@ def record_interest(name: str, email: str, service_name: str, notes: str,
             record_id = row[0]
         return finish(ToolResult(status="ok", code="interest_recorded" if created else "already_recorded",
                                 message=("Follow-up interest saved locally." if created else "Existing interest retained; no new record or update.")
-                                + " No appointment booked, payment taken, or email sent.",
+                                + f" Record ID: {record_id}. No appointment booked, payment taken, or email sent.",
                                 record_id=record_id, created=created))
     except (OSError, sqlite3.Error):
         # Never return exception strings: they can contain local paths or input data.

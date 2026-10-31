@@ -34,14 +34,14 @@ On macOS/Linux use `.venv/bin/python` in place of `.venv\Scripts\python.exe`. Th
 .venv\Scripts\python.exe -m pytest -q
 ```
 
-`--list-tools` prints actual server-discovered names, descriptions and JSON schemas. The protocol demo starts a real server and calls all three tools, including failure, duplicate and no-consent cases, in an automatically removed temporary store. It does **not** use a model and is labeled accordingly. The pytest suite also uses temporary stores.
+`--list-tools` shows a concise table of the actual discovered tools and categories. Use `--schemas` for complete machine-readable JSON schemas, or `--trace` to include raw result JSON and server capability events. The protocol demo starts a real server and calls all three tools, including failure, duplicate and no-consent cases, in an automatically removed temporary store. It does **not** use a model and is labeled accordingly. The pytest suite also uses temporary stores.
 
 ## Configure the live OpenAI agent
 
-Copy `.env.example` to `.env`, then fill `OPENAI_API_KEY` locally. Never paste a key into a chat prompt or Git. The host loads only C5's `.env`, never another project's file. An existing shell `OPENAI_API_KEY` takes precedence. `OPENAI_MODEL` defaults to `gpt-4.1-mini`, which was used for the saved real tests.
+Create `.env` from `.env.example` if it does not already exist, then fill `OPENAI_API_KEY` locally. Edit an existing `.env` without overwriting its contents. Never paste a key into a chat prompt or Git. The host loads only C5's `.env`, never another project's file. An existing shell `OPENAI_API_KEY` takes precedence. `OPENAI_MODEL` defaults to `gpt-4.1-mini`, which was used for the saved real tests.
 
 ```powershell
-Copy-Item .env.example .env
+if (-not (Test-Path .env)) { Copy-Item .env.example .env }
 # Edit .env locally to configure the key. Then:
 .venv\Scripts\python.exe agent_client.py
 ```
@@ -52,7 +52,18 @@ Interactive prompt example:
 What does Project Clarity cost, how long is it, and how is it delivered? I only want information.
 ```
 
-Type `quit` to close the connection. One request can also run with `--prompt "..."`. `--data-dir runtime/my-demo` selects a separate local store. Relative data paths are resolved from the C5 project directory, even when the client is launched elsewhere.
+The welcome panel shows the model, record directory and available commands. Normal output separates actual MCP receipts from Mira's model-generated answer. A receipt always shows the returned record ID, even if model wording varies.
+
+| Chat command | Effect |
+|---|---|
+| `/help` | Show how to use the assistant |
+| `/examples` | Show three copy-paste requests |
+| `/tools` | Show actual server-discovered tools |
+| `/records` | Inspect saved IDs and services; contacts remain hidden |
+| `/new` | Clear conversation history; saved interests remain |
+| `/quit` | Close the connection; `quit` and `exit` also work |
+
+One request can run with `--prompt "..."`; blank one-shot prompts are rejected. `--data-dir runtime/my-demo` selects a separate local store. All relative data paths, including inspector paths, start at the C5 project directory. Missing-key errors give setup instructions; an individual chat error allows recovery without closing the session. `/records` is a local operator command, not a fourth MCP tool available to the agent.
 
 ## Live demonstration and evidence
 
@@ -64,14 +75,20 @@ Type `quit` to close the connection. One request can also run with `--prompt "..
 
 Each run creates a fresh ignored `runtime/demo-...` directory, prints it, and sends the seven tested prompts to the real model. It prints actual client boundary events, server capability outcomes, the model's answer, and read-only persistence proof. Model routing is automatic; there is no `tool_choice` override or local function bypass. The retry case may safely use either writing interface. The dedicated Action and Orchestration cases each require the respective tool.
 
+The step view labels progress as 1/7 through 7/7. Press Enter to run a case or `q` to stop; EOF also stops safely. Compact receipts show the actual outcome and orchestration sequence. Add `--trace` for full JSON and server-side event logs.
+
+By default each new run saves `runtime/demo-.../live_report.json`, preserving the supplied submission evidence. Reports are saved atomically before execution, after each case and on failure/cancellation. An interrupted run is marked incomplete and cannot inherit an earlier pass. To intentionally create a new submission report, use `--output evidence/my-reviewed-run.json`. Automated prose checks are heuristics; review final model answers before recording.
+
 Results from final validation:
 
-- **33 passed, 1 skipped** in ordinary pytest: 27 real protocol tests and 6 scripted-model SDK integration tests passed. The opt-in paid API test was skipped there.
+- **49 passed, 1 skipped** in ordinary pytest: 29 protocol tests, 6 scripted-model SDK tests, 6 CLI/configuration tests and 8 evidence/evaluation tests passed. The opt-in paid API test was skipped there.
 - **7/7 real OpenAI scenarios passed** separately: Data, Action, Orchestration, failed lookup, duplicate, information with contact details, and invalid email. Two records were created; all later cases retained the count of two.
 - **7/7 protocol-demo cases passed** with no model or key.
 - Research main summary: **371 whitespace-delimited words**, within 300–400. Reflection: **2 paragraphs**.
 
 Inspect [final live results](evidence/live_agent.json), [actual discovery and protocol calls](evidence/protocol.json), [pytest XML](evidence/pytest.xml), and the [strict compliance report](docs/compliance_report.md). Initial live reports are intentionally preserved and marked `passed=false`; they document limitations found during refinement. The test fixture's scripted model is explicitly labeled and is not evidence of real model selection.
+
+The [independent subagent review](docs/independent_review.md) rated the revised technical/written work at approximately **95/100 unofficially**, while correctly keeping the full submission incomplete without its video and links. Its findings led to stronger validation, consistent inspector configuration, more reliable evidence and a clearer CLI. [Interface review](docs/interface_review.md) includes narrow-terminal previews and tested user flows.
 
 The [extracted-archive check](evidence/archive_reproduction.json) also passed discovery from an outside working directory and all seven protocol cases using an extracted source copy with the same tested dependency environment. It does not claim a second dependency installation.
 
@@ -97,7 +114,7 @@ The code, research, reflection and execution evidence are prepared. **The actual
 
 - A server disconnect at startup usually means wrong dependencies or working directory. Install the pins and use the supplied client. Current FastMCP's `FASTMCP_CHECK_FOR_UPDATES` takes `off`, not `false`; the client sets it correctly.
 - API authentication, quota, network or model-access problems do not affect credential-free MCP tests. Verify the local key and account access; the CLI suppresses provider exception bodies to avoid leaking credentials or request data.
-- The server's stdout is reserved for MCP. Business logs go to stderr. Do not add ordinary `print()` calls inside server functions.
+- The server's stdout is reserved for MCP. With `--trace`, business logs go to stderr and the client adds raw JSON. Compact mode displays client receipts for actual calls. Do not add ordinary `print()` calls inside server functions.
 - Unknown services and invalid contacts return structured failures. Schema violations return MCP errors. Inspect `status/code` as well as `is_error`; domain errors are valid structured results.
 - Repeating an email/service does not update notes. One outstanding interest per pair is a deliberate scope limit. There is no booking calendar, email, authentication, automatic retention or contact-ownership verification.
 - Consent is asserted by a trusted local host; a malicious MCP client can lie about it. Model instructions do not guarantee perfect routing or prose under arbitrary adversarial inputs. The saved tests show observed behavior for specified cases, not a universal guarantee.
@@ -105,4 +122,4 @@ The code, research, reflection and execution evidence are prepared. **The actual
 
 ## Project contents
 
-`mcp_server.py`: three registered tools; `business.py`: typed contracts, catalog and transactions; `agent_client.py`: actual Agents SDK MCP host; `scripts/`: protocol/live demo, read-only inspector and packaging; `tests/`: real subprocess tests and clearly labeled scripted-model tests; `docs/`: research, contracts, architecture, reflection, review and recording plan; `evidence/`: synthetic execution reports and source provenance.
+`mcp_server.py`: three registered tools; `business.py`: typed contracts, catalog and transactions; `agent_client.py`: actual Agents SDK MCP host; `terminal_ui.py`: readable receipts and chat presentation; `config.py`: consistent local paths; `scripts/`: protocol/live demo, read-only inspector, interface preview and packaging; `tests/`: protocol, scripted-model SDK, CLI recovery and evidence checks; `docs/`: research, contracts, architecture, reflection, reviews and recording plan; `evidence/`: synthetic execution reports and source provenance.

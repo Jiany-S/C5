@@ -1,5 +1,6 @@
 """Exactly three MCP tools. stdout is reserved for protocol messages."""
 import logging
+import os
 import sys
 from typing import Annotated
 
@@ -37,5 +38,6 @@ def register_verified_service_interest(name: Name, email: Email, service_name: S
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, stream=sys.stderr, format="%(message)s")
-    mcp.run(transport="stdio", show_banner=False)
+    logging.basicConfig(level=logging.WARNING, stream=sys.stderr, format="%(message)s")
+    logging.getLogger("cedarbridge").setLevel(logging.INFO if os.getenv("CEDARBRIDGE_LOG_EVENTS") == "1" else logging.WARNING)
+    mcp.run(transport="stdio", show_banner=False, log_level="WARNING")

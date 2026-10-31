@@ -1,6 +1,9 @@
 {
   "execution": "REAL_OPENAI_MODEL_REAL_MCP",
-  "utc": "2026-10-30T15:12:00.992406+00:00",
+  "run_id": "2d4bb4fb-7fd6-443e-aaf7-b0ac05422e51",
+  "state": "completed",
+  "passed": true,
+  "utc": "2026-10-31T15:46:08.060523+00:00",
   "model": "gpt-4.1-mini",
   "versions": {
     "fastmcp": "4.1.4",
@@ -8,7 +11,7 @@
     "openai-agents": "0.24.0",
     "openai": "3.41.0"
   },
-  "data_dir": "runtime\\demo-a2654e2f",
+  "data_dir": "runtime\\demo-2d4bb4fb",
   "cases": [
     {
       "id": "data",
@@ -50,13 +53,17 @@
           "is_error": false
         }
       ],
-      "answer": "Project Clarity is an online project scoping consultation lasting 30 minutes. It costs $15 per student and is delivered online. The service is available Monday to Friday, from 10:00 to 18:00 (Asia/Beirut time). If you want more details or have other questions, feel free to ask!",
+      "answer": "Project Clarity is an online project scoping consultation delivered in English or Arabic. It lasts 30 minutes and costs $15 per student. The service is conducted online, and staff aim to respond within two business days for follow-up inquiries. \n\nIf you want more details or have other questions, feel free to ask!",
       "record_count": 0,
       "checks": {
         "record_count": true,
+        "no_protocol_error": true,
+        "no_affirmative_booking_or_email": true,
         "selected_tool_and_code": true,
         "only_read_tool_used": true,
-        "answer_grounded_price": true
+        "answer_grounded_price": true,
+        "answer_grounded_duration": true,
+        "no_new_record": true
       },
       "passed": true
     },
@@ -70,9 +77,9 @@
             "schema_version": "1.0",
             "status": "ok",
             "code": "interest_recorded",
-            "message": "Follow-up interest saved locally. No appointment booked, payment taken, or email sent.",
+            "message": "Follow-up interest saved locally. Record ID: 06a91509-e83a-4226-8b16-c7f253df1aba. No appointment booked, payment taken, or email sent.",
             "service": null,
-            "record_id": "7fab2e9f-118b-49dc-a72b-1f8858889830",
+            "record_id": "06a91509-e83a-4226-8b16-c7f253df1aba",
             "created": true,
             "steps": [],
             "available_services": [],
@@ -81,12 +88,15 @@
           "is_error": false
         }
       ],
-      "answer": "Your follow-up interest for Project Clarity has been recorded locally with record ID 7fab2e9f-118b-49dc-a72b-1f8858889830. No appointment was booked, no payment was taken, and no email was sent. If you need more information or want to proceed further, just let me know!",
+      "answer": "Your follow-up interest in Project Clarity has been recorded with the notes about scoping a Python study planner. No appointment was booked, no payment taken, and no email was sent. Staff aim to reply within two business days.\n\nRecord ID: 06a91509-e83a-4226-8b16-c7f253df1aba.",
       "record_count": 1,
       "checks": {
         "record_count": true,
+        "no_protocol_error": true,
+        "no_affirmative_booking_or_email": true,
         "selected_tool_and_code": true,
         "answer_includes_actual_record_id": true,
+        "persisted_record_id_matches": true,
         "no_booking_or_email_claim": true
       },
       "passed": true
@@ -101,7 +111,7 @@
             "schema_version": "1.0",
             "status": "ok",
             "code": "interest_recorded",
-            "message": "Follow-up interest saved locally. No appointment booked, payment taken, or email sent.",
+            "message": "Follow-up interest saved locally. Record ID: adff1426-3980-42b4-9032-ac3cdf96e803. No appointment booked, payment taken, or email sent.",
             "service": {
               "name": "Team Sprint",
               "duration_minutes": 90,
@@ -110,7 +120,7 @@
               "max_students": 4,
               "description": "Online project planning workshop for up to four students."
             },
-            "record_id": "a3ac36d1-78bd-4dfd-84a0-8034dd931544",
+            "record_id": "adff1426-3980-42b4-9032-ac3cdf96e803",
             "created": true,
             "steps": [
               {
@@ -128,12 +138,15 @@
           "is_error": false
         }
       ],
-      "answer": "Team Sprint is a published service. Your follow-up interest for the Team Sprint service has been recorded locally with record ID a3ac36d1-78bd-4dfd-84a0-8034dd931544. No appointment was booked, no payment taken, and no email was sent. Staff aim to reply within two business days.",
+      "answer": "Team Sprint is a published service described as an online project planning workshop for up to four students, lasting 90 minutes and priced at 60 USD per team.\n\nYour interest for follow-up in the Team Sprint service has been registered with the notes: \"Plan a four-student campus app sprint.\" No appointment was booked, no payment was taken, and no email was sent.\n\nRecord ID: adff1426-3980-42b4-9032-ac3cdf96e803.",
       "record_count": 2,
       "checks": {
         "record_count": true,
+        "no_protocol_error": true,
+        "no_affirmative_booking_or_email": true,
         "selected_tool_and_code": true,
         "answer_includes_actual_record_id": true,
+        "persisted_record_id_matches": true,
         "no_booking_or_email_claim": true
       },
       "passed": true
@@ -172,8 +185,12 @@
       "record_count": 2,
       "checks": {
         "record_count": true,
+        "no_protocol_error": true,
+        "no_affirmative_booking_or_email": true,
         "selected_tool_and_code": true,
-        "no_record_claim": true
+        "no_new_record": true,
+        "unknown_service_explained": true,
+        "no_successful_record_claim": true
       },
       "passed": true
     },
@@ -187,7 +204,7 @@
             "schema_version": "1.0",
             "status": "ok",
             "code": "already_recorded",
-            "message": "Existing interest retained; no new record or update. No appointment booked, payment taken, or email sent.",
+            "message": "Existing interest retained; no new record or update. Record ID: 06a91509-e83a-4226-8b16-c7f253df1aba. No appointment booked, payment taken, or email sent.",
             "service": {
               "name": "Project Clarity",
               "duration_minutes": 30,
@@ -196,7 +213,7 @@
               "max_students": 1,
               "description": "Online project scoping consultation."
             },
-            "record_id": "7fab2e9f-118b-49dc-a72b-1f8858889830",
+            "record_id": "06a91509-e83a-4226-8b16-c7f253df1aba",
             "created": false,
             "steps": [
               {
@@ -214,13 +231,18 @@
           "is_error": false
         }
       ],
-      "answer": "Your follow-up interest in Project Clarity has already been recorded with the existing record ID 7fab2e9f-118b-49dc-a72b-1f8858889830. No new record was created, and no appointment was booked or email sent. If you need anything else, just let me know!",
+      "answer": "Your follow-up interest for Project Clarity has already been recorded with the existing record ID 06a91509-e83a-4226-8b16-c7f253df1aba. No appointment was booked, no payment taken, and no email sent. If you need anything else, just let me know!",
       "record_count": 2,
       "checks": {
         "record_count": true,
+        "no_protocol_error": true,
+        "no_affirmative_booking_or_email": true,
         "selected_tool_and_code": true,
         "answer_includes_actual_record_id": true,
-        "no_booking_or_email_claim": true
+        "persisted_record_id_matches": true,
+        "no_booking_or_email_claim": true,
+        "no_new_record": true,
+        "same_original_record_id": true
       },
       "passed": true
     },
@@ -264,13 +286,16 @@
           "is_error": false
         }
       ],
-      "answer": "The Prototype Clinic service at CedarBridge Learning Studio is a 60-minute online debugging and testing coaching session. The price is $30 USD per student. If you have any other questions, feel free to ask!",
+      "answer": "The Prototype Clinic service is an online debugging and testing coaching session lasting 60 minutes. The price is $30 USD per student. If you have any other questions, feel free to ask!",
       "record_count": 2,
       "checks": {
         "record_count": true,
+        "no_protocol_error": true,
+        "no_affirmative_booking_or_email": true,
         "selected_tool_and_code": true,
         "only_read_tool_used": true,
-        "answer_grounded_price": true
+        "answer_grounded_price": true,
+        "no_new_record": true
       },
       "passed": true
     },
@@ -278,19 +303,23 @@
       "id": "invalid_email",
       "prompt": "Please record follow-up interest in Project Clarity. My name is Invalid Demo, email not-an-email, notes: Plan my project. Do not guess or correct my email.",
       "events": [],
-      "answer": "To record your follow-up interest in Project Clarity, I need a valid email address format. The email you provided, \"not-an-email,\" is not valid. Could you please provide a valid email address?",
+      "answer": "To record your follow-up interest in Project Clarity, I need a valid email address format. The email you provided, \"not-an-email,\" does not appear to be valid. Could you please provide a valid email address?",
       "record_count": 2,
       "checks": {
         "record_count": true,
-        "invalid_email_not_saved": true
+        "no_protocol_error": true,
+        "no_affirmative_booking_or_email": true,
+        "no_new_record": true,
+        "clarification_requested": true
       },
       "passed": true
     }
   ],
+  "prose_checks": "Heuristic checks; manually review final answers before submission.",
   "tools": [
     "get_service_details",
     "record_service_interest",
     "register_verified_service_interest"
   ],
-  "passed": true
+  "finished_utc": "2026-10-31T15:46:38.458576+00:00"
 }

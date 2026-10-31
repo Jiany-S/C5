@@ -70,15 +70,23 @@ async def test_action_persists_and_duplicate_is_stable(server, tmp_path):
     assert first["created"] and first["code"] == "interest_recorded"
     assert second["code"] == "already_recorded" and not second["created"]
     assert first["record_id"] == second["record_id"]
+    assert first["record_id"] in first["message"] and second["record_id"] in second["message"]
     saved = rows(tmp_path / "records")
     assert len(saved) == 1 and saved[0] == (first["record_id"],LEAD["name"],LEAD["email"],LEAD["service_name"],LEAD["notes"])
 
 
-@pytest.mark.parametrize("changes", [{"email":"broken"},{"email":"a..b@example.com"},{"name":" "},{"notes":" "},{"service_name":"Missing"}])
+@pytest.mark.parametrize("changes", [{"email":"broken"},{"email":"a..b@example.com"},
+                                    {"email":"demo@" + "a"*64 + ".com"},
+                                    {"name":" "},{"notes":" "},{"service_name":"Missing"}])
 async def test_action_domain_validation_never_writes(server, tmp_path, changes):
     result = await call(server, "record_service_interest", **(LEAD | changes))
     assert result["status"] == "error" and not result["created"]
     assert not (tmp_path / "records").exists()
+
+
+async def test_email_domain_label_boundary(server, tmp_path):
+    result = await call(server, "record_service_interest", **(LEAD | {"email":"demo@" + "a"*63 + ".com"}))
+    assert result["created"] and len(rows(tmp_path / "records")) == 1
 
 
 @pytest.mark.parametrize("changes", [{"name":""},{"email":None},{"follow_up_requested":"yes"},{"notes":"x"*1001}])

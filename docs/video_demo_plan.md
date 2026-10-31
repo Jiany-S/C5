@@ -7,7 +7,7 @@ The assignment requires a 5–7-minute screencast and does not explicitly requir
 ## Prepare before recording
 
 1. Configure a local C5 `.env` key or the shell's `OPENAI_API_KEY`; do not show its contents. The implementation-time key was read into memory from an authorized existing local file and was not copied into C5.
-2. Install the locked environment and verify `python -m pytest -q` using the venv interpreter. The saved evidence is 33 passed, 1 opt-in live test skipped; the live demo is tested separately.
+2. Install the locked environment and verify `python -m pytest -q` using the venv interpreter. The saved evidence is 49 passed, 1 opt-in live test skipped; the live demo is tested separately.
 3. Obtain approval before publishing the standalone repository. Insert its real verified URL into `docs/submission.md`. No repository URL is claimed yet.
 4. Use a 1080p recording, readable terminal font, word wrap, and a split view of terminal plus README/architecture/code. Hide notifications. Keep only invented names and example.com contacts visible.
 5. Open `README.md`, `docs/architecture.md`, `mcp_server.py`, `business.py`, `evidence/pytest.xml`, and `docs/reflection.md`. Keep the caption draft available in the recording editor or on-screen notes.
@@ -18,7 +18,7 @@ cd 'C:\Users\jijos\Desktop\EECE 503P\C5'
 .venv\Scripts\python.exe -m scripts.live_demo --step
 ```
 
-The script starts the server, discovers the three tools, and pauses before every scenario. Each scenario uses an independent conversation, so all prompts below are also suitable for separate CLI chats. The fresh store prevents prior rehearsals from changing the success cases into duplicates. There is no destructive reset command.
+The script starts the server, discovers the three tools, and pauses before every numbered scenario. Press Enter to run it, or q to stop; EOF also cancels safely. Each scenario uses an independent conversation, so all prompts below are also suitable for separate CLI chats. The fresh store prevents prior rehearsals from changing the success cases into duplicates. There is no destructive reset command. Each run prints its unique runtime/demo-.../live_report.json path and preserves completed/partial execution atomically. Add --trace for raw JSON and server capability events as well as the default real MCP receipts.
 
 ## Exact screen sequence
 
@@ -28,12 +28,12 @@ The script starts the server, discovers the three tools, and pauses before every
 | 0:25–1:05 | Show architecture diagram and `make_agent` / `make_server` | “Host: Agents SDK application. Client: SDK MCP connection. Server: separate FastMCP Python process over stdio.” Explain discovered tools become model inputs. |
 | 1:05–1:30 | Show exactly three decorators in `mcp_server.py`; run live command | Point to actual discovered tool names. Server is launched by client; stdout is protocol-only and capability logs use stderr. |
 | 1:30–2:00 | Press Enter for `data` | Highlight selected Data tool, actual result, $15 / 30 minutes / online, and record count zero. |
-| 2:00–2:45 | Press Enter for `action` | Highlight real Action call, `created=true`, UUID in both tool result and model answer, and persisted row count one. No booking/email. |
-| 2:45–3:35 | Press Enter for `orchestration` | Highlight one outer MCP invocation, server lookup and Action events, ordered `steps`, verified service and second persisted ID. Explain internal capability calls are not extra MCP round trips. |
+| 2:00–2:45 | Press Enter for `action` | Highlight real Action call, “Saved record ID,” UUID in both receipt and model answer, and persisted row count one. Add `--trace` to show raw `created=true`. No booking/email. |
+| 2:45–3:35 | Press Enter for `orchestration` | Highlight one outer MCP invocation, the actual ordered Sequence line, verified service and second persisted ID. Add `--trace` for server-side capability events and raw `steps`. Explain internal capability calls are not extra MCP round trips. |
 | 3:35–4:10 | Press Enter for `unknown` | Unknown Moon Camp returns `unknown_service`; only lookup appears in steps. Count remains two. |
 | 4:10–4:45 | Press Enter for `repeat` | Compare original Project Clarity ID with returned ID. `already_recorded`, `created=false`, count two. Either write interface may be selected safely. |
 | 4:45–5:20 | Press Enter for `information_with_contact`, then `invalid_email` | Contact details alone do not authorize writing. Invalid email triggers clarification in the observed run. No third row. |
-| 5:20–6:00 | Show saved pytest result, SQLite unique constraint/explicit close, reflection | “33 tests passed; live API checks are separate.” Explain duplicate safety, Windows connection closure and precise result interpretation as observed challenges. |
+| 5:20–6:00 | Show saved pytest result, SQLite unique constraint/explicit close, reflection | “49 tests passed; live API checks are separate.” Explain duplicate safety, Windows connection closure and precise result interpretation as observed challenges. |
 | 6:00–6:20 | Show actual published repository URL and docs | Explain one future improvement: authenticated consent, retention, or structured final answers. End with real repository link and reflection. |
 
 Keep the finished video between **5:00 and 7:00**. Aim for 6:20; preserve actual execution and enough reading time. If API latency exceeds a section, shorten code explanation or pauses. Re-record when an error prevents demonstrating required behavior; do not silently splice in old output as a live result. Verify the exported video's duration and caption readability before submitting.
