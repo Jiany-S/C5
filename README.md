@@ -17,7 +17,7 @@ Inputs are typed; outputs use a Pydantic `ToolResult`. Failures have explicit ou
 - [Research summary](docs/mcp_research_summary.md): 371 words, excluding title and references.
 - [Reflection](docs/reflection.md): two paragraphs on boundaries, challenges and future work.
 - [Architecture](docs/architecture.md) and [tool contracts](docs/tool_design.md).
-- [Requirements and evidence](docs/compliance_report.md).
+- [Requirements checklist](docs/requirements_checklist.md).
 - [Submission handoff and video status](docs/submission.md).
 
 Repository: [Jiany-S/C5](https://github.com/Jiany-S/C5), verified public on 2026-11-01. A screencast is recorded locally; its hosted sharing link is still pending. Recordings are delivered separately from source.
@@ -86,7 +86,7 @@ Inspect the directory printed by the demo:
 .venv\Scripts\python.exe -m scripts.inspect_records --data-dir runtime/demo-REPLACE_WITH_PRINTED_ID
 ```
 
-The inspector opens SQLite read-only and hides contact details and notes. The [recording plan](docs/video_demo_plan.md) contains exact tested prompts and explanations. Its caption file is a draft, not subtitles aligned to the final recording.
+The inspector opens SQLite read-only and hides contact details and notes.
 
 ## Validation evidence
 
@@ -95,7 +95,7 @@ The inspector opens SQLite read-only and hides contact details and notes. The [r
 - Protocol demo: **7/7 cases passed** without a model or key.
 - Research summary: **371 words**; reflection: **two paragraphs**.
 
-See the [evidence index](evidence/README.md), [current validation](docs/submission_review.md), and [compliance matrix](docs/compliance_report.md). Earlier failed and intermediate reports remain unchanged under `evidence/history/` and are not counted as current passes. Model-answer checks are heuristics, reviewed alongside actual tool outcomes.
+See the [evidence index](evidence/README.md) for test, protocol and real-model results. Earlier failed and intermediate reports remain unchanged under `evidence/history/` and are not counted as current passes. Model-answer checks are heuristics, reviewed alongside actual tool outcomes.
 
 Set `RUN_LIVE_TESTS=1` with a configured key to enable the optional paid pytest case. Normal pytest does not make paid calls. The standalone live demo is recommended for a new evidence report.
 

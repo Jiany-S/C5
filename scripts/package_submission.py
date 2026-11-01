@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 TOP_LEVEL = ["README.md", "business.py", "mcp_server.py", "agent_client.py", "config.py", "terminal_ui.py", "pytest.ini",
              "requirements.txt", "requirements-dev.txt", "requirements-lock.txt", ".env.example", ".gitignore", ".gitattributes"]
 FOLDERS = ["business_data", "docs", "tests", "scripts", "evidence"]
-EXTENSIONS = {".py", ".md", ".json", ".xml", ".srt", ".png"}
+EXTENSIONS = {".py", ".md", ".json", ".xml", ".png"}
 
 
 def submission_files() -> list[Path]:

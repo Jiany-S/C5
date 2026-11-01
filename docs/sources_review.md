@@ -32,4 +32,4 @@ Tutorial observations:
 
 `pip index versions` and PyPI metadata were checked before resolving FastMCP 4.1.4, MCP 2.3.0 and Agents SDK 0.24.0. A fresh Python 3.11 virtual environment installed them together successfully. `pip check` reported no broken requirements. A complete freeze is included with a Windows marker for pywin32; direct requirements are pinned separately. Real subprocess and OpenAI runs verify compatibility more strongly than documentation snippets alone.
 
-The lecture notes describe orchestration through agents-as-tools, while the assignment explicitly permits a tool coordinating Data and Action capabilities. The assignment is authoritative here. No subagent, extra tool or nested model is needed for this small workflow.
+The lecture notes describe orchestration through agents-as-tools, while the assignment explicitly permits a tool coordinating Data and Action capabilities. The assignment is authoritative here. This small workflow needs no additional registered tools or nested model.

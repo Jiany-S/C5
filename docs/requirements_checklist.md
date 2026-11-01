@@ -27,7 +27,7 @@ Authority: C5 assignment PDF, pp. 1–3, reviewed 2026-10-30. Additional enginee
 - [x] Exercise Agents SDK with labeled scripted model responses and separately with real OpenAI calls.
 - [x] Test result interpretation and informational requests that must not write.
 - [x] Use temporary test stores; keep secrets, runtime data, caches and environments out of Git.
-- [x] Prepare tested demo prompts, recording sequence, architecture and tool-design documentation.
-- [x] Re-read the assignment, audit every requirement and fix reasonable findings.
+- [x] Prepare tested demo prompts, architecture and tool-design documentation.
+- [x] Check the assignment requirements against the implemented behavior and written deliverables.
 
-Current completion and evidence locations are recorded in `compliance_report.md` and `submission_review.md`. A recording plan does not satisfy the actual video deliverable.
+Current deliverable locations are listed in [Submission handoff](submission.md); execution results are indexed in [Evidence](../evidence/README.md). The hosted-video link is still pending.
