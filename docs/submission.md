@@ -1,23 +1,26 @@
 # Submission handoff
 
-Status: local source and execution evidence prepared; video and publication remain pending.
+Reviewed 2026-11-01. Source, written deliverables and execution evidence are prepared. The repository is public and a screencast has been recorded. Its hosted sharing link and viewer-access check remain pending.
 
 | Deliverable | Location/status |
 |---|---|
-| Written summary | `docs/mcp_research_summary.md`, 371 words excluding title/references |
-| Source project | Standalone C5 directory and `dist/C5-submission.zip` |
-| Reflection | `docs/reflection.md`, 2 paragraphs |
-| Test / MCP evidence | `evidence/pytest.xml`, `evidence/protocol.json`, `evidence/live_agent.json` |
-| Code repository URL | **PENDING USER APPROVAL AND PUBLICATION** |
-| Screencast URL | **PENDING RECORDING AND UPLOAD** |
-| Exported video duration | **PENDING — must be 5–7 minutes** |
+| Written summary | [Research summary](mcp_research_summary.md), 371 words excluding title/references |
+| Source repository | [Jiany-S/C5](https://github.com/Jiany-S/C5), verified public on 2026-11-01 |
+| Source archive | `dist/C5-submission.zip`, rebuilt after cleanup and excluded from Git |
+| Reflection | [Reflection](reflection.md), two paragraphs |
+| Test / MCP evidence | [Evidence index](../evidence/README.md) |
+| Recorded video | `runtime/video-edit/C5_Submission_Video.mp4`, verified MP4; delivered separately from source |
+| Screencast URL | **Pending upload and verification of viewer access** |
+| Export duration | **6:57.633 at 1.12x**, with voice pitch preserved; duration/timestamp and opening/join/ending decode checks passed |
 
-1. Review the code and research so you can explain each tool and its limitations. Follow your course's rules for disclosing AI assistance; implementation assistance was used here.
-2. Configure your own C5 `.env` or shell key. The key used for verification was never copied into the submission.
-3. Approve repository creation/publication before any upload on your behalf. The local repository has no remote. Choose visibility and check the staged-file inventory. Do not publish `.env`, virtual environments, runtime databases or course PDFs/notebooks.
-4. Once published, replace the pending repository entry with its actual verified URL. Confirm the professor can access it.
-5. Record the 6:20 sequence in `video_demo_plan.md` with the live model and real MCP server. Align the supplied captions, inspect the final export, and check duration.
-6. Upload the recording to your chosen platform, verify its access settings, and fill in the actual video link and duration above.
-7. Rebuild the ZIP with `.venv\Scripts\python.exe -m scripts.package_submission` if documentation or links changed. Submit the summary, repository and video links, and reflection through the course's required channel.
+The latest recording replaces earlier takes. Its approved cut removes original timestamps 7:35-10:27 and retains the ending. That normal-speed cut is 7:47.716. At 1.10x it would still be 7:05.2; the final submission export uses 1.12x to satisfy the published 5-7-minute limit with voice pitch preserved. Earlier edits and source recordings remain local.
 
-No project publication, video recording, upload or course submission has been performed by the assistant. No C6 work was started and C3/C4 were not modified.
+## Remaining steps
+
+1. Watch the final export and confirm the demonstration and challenges explanation are clear. Do not show credential files.
+2. Upload the final MP4 to your chosen platform, allow the professor to view it, and paste the actual sharing URL into this document. No video has been uploaded by this cleanup.
+3. Check the repository and video links as the intended viewer. Local file paths are not hosted submission links.
+4. Rebuild the source archive after adding the video link with `python -m scripts.package_submission` using the project virtual environment.
+5. Submit the written summary, repository link, hosted video link and reflection through the course's required channel. Review the work and follow the course's rules for disclosing AI assistance.
+
+The source package excludes `.env`, environments, records, recordings, editing assets, caches and course PDFs/notebooks. C3/C4 were not changed and C6 was not started.

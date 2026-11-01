@@ -1,5 +1,7 @@
 # Interface and usability review — 2026-10-31
 
+> Historical review snapshot. See [Submission handoff](submission.md) for current deliverables and remaining steps.
+
 C5's user interface is intentionally a command-line chat and demonstration interface. It supports the assignment's real-time agent/tool screencast without adding a web frontend or more tools.
 
 ## Reviewed flows
@@ -13,7 +15,7 @@ C5's user interface is intentionally a command-line chat and demonstration inter
 - **Recording:** seven labeled steps, Enter to continue, `q` or EOF to stop, real persistence proof and atomic evidence snapshots. Cancellation cannot be reported as a completed pass.
 - **Narrow windows:** actual tool names, receipts, UUIDs and orchestration sequences wrap within 60- and 80-column terminal layouts. Use at least 80 columns and a readable font for the screencast.
 
-The automated CLI tests cover missing credentials, empty one-shot rejection, machine-readable discovery, commands, recovery, safe messages, configuration consistency and receipt privacy/wrapping. The fresh real multi-turn check is `evidence/interactive_cli.json`: scripted user input drives the actual CLI, OpenAI model and MCP server; model responses are not mocked. It correctly looked up a service, recorded one requested follow-up, displayed its actual ID and retained it after `/new`. The initial probe expected the standalone Action tool, but the model used Orchestration for the context-dependent request. The report retains that routing-specific failure alongside explicit manual review. The separate seven-case demo still requires and successfully exercises both dedicated tool categories.
+The automated CLI tests cover missing credentials, empty one-shot rejection, machine-readable discovery, commands, recovery, safe messages, configuration consistency and receipt privacy/wrapping. The fresh real multi-turn check is `evidence/history/interactive_cli.json`: scripted user input drives the actual CLI, OpenAI model and MCP server; model responses are not mocked. It correctly looked up a service, recorded one requested follow-up, displayed its actual ID and retained it after `/new`. The initial probe expected the standalone Action tool, but the model used Orchestration for the context-dependent request. The report retains that routing-specific failure alongside explicit manual review. The separate seven-case demo still requires and successfully exercises both dedicated tool categories.
 
 ## Visual exports
 

@@ -15,8 +15,8 @@ Authority: C5 assignment PDF, pp. 1–3, reviewed 2026-10-30. Additional enginee
 - [x] Supply tests or scripts proving functionality and failures.
 - [x] Supply configuration and README setup instructions.
 - [x] Write a 1–2-paragraph reflection on boundaries, tool count and future work.
-- [ ] Record a 5–7-minute screencast: introduce categories, show agent round trips, explain challenges.
-- [ ] Submit source repository and video links. Publishing requires user approval.
+- [x] Record and export a 5–7-minute screencast: final local export is 6:57.633; owner final playback review remains before upload.
+- [ ] Submit the public repository link and final hosted-video link. Repository verified; video upload/link pending.
 
 ## Additional requested verification
 
@@ -30,4 +30,4 @@ Authority: C5 assignment PDF, pp. 1–3, reviewed 2026-10-30. Additional enginee
 - [x] Prepare tested demo prompts, recording sequence, architecture and tool-design documentation.
 - [x] Re-read the assignment, audit every requirement and fix reasonable findings.
 
-Completion and exact evidence locations will be recorded in `compliance_report.md`. A recording plan does not satisfy the actual video deliverable.
+Current completion and evidence locations are recorded in `compliance_report.md` and `submission_review.md`. A recording plan does not satisfy the actual video deliverable.

@@ -1,0 +1,93 @@
+{
+  "review_date": "2026-11-01",
+  "utc": "2026-11-01T11:56:30.598436+00:00",
+  "status": "prepared_pending_hosted_video_url_and_owner_final_playback",
+  "pytest": {
+    "tests": 50,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 1,
+    "passed": 49,
+    "seconds": 122.325,
+    "hostname_removed": true
+  },
+  "pip_check": "No broken requirements found.",
+  "protocol_cases_passed": 7,
+  "saved_live_openai_cases_passed": 7,
+  "saved_live_run_utc": "2026-10-31T15:46:08.060523+00:00",
+  "new_paid_api_calls": 0,
+  "summary_words": 371,
+  "reflection_paragraphs": 2,
+  "syntax_valid_python_files": 19,
+  "markdown_local_links_valid": true,
+  "credential_pattern_scan": {
+    "passed": true,
+    "files_checked": 57,
+    "local_env_read": false,
+    "exact_value_key_scan": false,
+    "dependency_vulnerability_scan": false
+  },
+  "repository": {
+    "url": "https://github.com/Jiany-S/C5",
+    "visibility": "public",
+    "verified_by": "GitHub connector"
+  },
+  "video": {
+    "output": "C5_Submission_Video.mp4",
+    "speed": 1.12,
+    "actual_seconds": 417.633,
+    "resolution": [
+      2880,
+      1704
+    ],
+    "frame_rate": "60/1",
+    "output_sha256": "ab5d82d435354cfb483681ec29839ecdcdd1ef121895d6ff2aa9e07f2586361c",
+    "decode_checks": "Opening, join and ending passed; the normal-speed source passed a full decode previously."
+  },
+  "video_hosted_url": null,
+  "package": {
+    "allowlisted_files": 59,
+    "zip_integrity": "passed",
+    "contents_match_source": true,
+    "secrets_runtime_media_and_caches_excluded": true,
+    "outside_directory_schema_discovery": [
+      "get_service_details",
+      "record_service_interest",
+      "register_verified_service_interest"
+    ],
+    "extracted_copy_protocol_cases_passed": 7,
+    "dependency_environment": "Existing tested pinned environment reused; no second installation claimed."
+  },
+  "cleanup": {
+    "original_recordings_preserved": 3,
+    "historical_reports_preserved": 9,
+    "runtime_logic_changed": false,
+    "prior_evidence_results_rewritten": false
+  },
+  "source_sha256": {
+    "agent_client.py": "5b4074dd6dc70a2781d21da228daead8b1e4d08b0d978182b2c377b22e885610",
+    "business.py": "f137a216641c6f68e9a53108f6505ac721e9cc11df7cab8498415726aa0d3f40",
+    "config.py": "1b600e5399ba554f69f30b9ac9b4106f3a6d4240ce911e76defb555af71382d2",
+    "mcp_server.py": "eed930ccc09fbba7a920ca7c1aff23566e67356301bfafe217b9b02ad2cc6647",
+    "scripts/__init__.py": "8ff4258d75398349d815c9802e8327c6431d6bf905f6f66f3d7b6a971a363b0a",
+    "scripts/demo_cases.py": "957c7327cc629cac407fd6985e4ed72cca4b2a3c7e11d9db26144dc796557425",
+    "scripts/demo_checks.py": "16d2dba3c6101edf5e276ef081987e1ee6b2a4b2669678129b8e939ba02545d6",
+    "scripts/inspect_records.py": "94fba35633ff41ceb69c9fb6228c2ab7aab2543eae10642964c65e3edcccbd3d",
+    "scripts/live_demo.py": "26b201aebc9e53583ba1437ebd42cf2a8a234b497cd650d87a9fbb11c4d7d29c",
+    "scripts/package_submission.py": "d749dd04e9aa1f909471cac2298c750810e469275656717abd917b7a4dc77404",
+    "scripts/preview_interface.py": "94fe3a070b8b4e33bb75f07085001c2922e3e784f740a41b54f5ea66c2ea88e2",
+    "scripts/protocol_demo.py": "ff1f9075b19b57d71756fb62c3e7c4873f64d2a3e3656b154fece77eb1dd18a8",
+    "terminal_ui.py": "b63334cacaadd54bc0266180ac57cf2b6bf0c1636f14e40d18ef934582a94d3f",
+    "tests/__init__.py": "9b25fa6540d520bc82537f1edd26c3589d91ed71fbda06e180c42f58ada97bbc",
+    "tests/conftest.py": "8d3dd26bdcede275e1952a90f1acd6a5985675ba9c7f1d9d4ff42e10fc48dc30",
+    "tests/test_agent.py": "f24834d7ac629dd57e3f317b55160614859deb44ed98f46fa7bff43dbebe55a8",
+    "tests/test_cli.py": "cdca594152849965f29d8890fb6154db0cc9225e9cbffe93d33a262dfe4b6e63",
+    "tests/test_demo.py": "b675b641d70025e70f7590a35681cd1ea868140f1c934059b7121cd18f883e75",
+    "tests/test_protocol.py": "69d6e45f81f7741c81cd72e526752c926cee2c7bc2af7b8a853b24cd5018bb45"
+  },
+  "limitations": [
+    "Owner final playback and hosted-video URL/access verification pending.",
+    "No new paid model run was needed for documentation, evidence organization and ignore changes.",
+    "Non-Windows execution and dependency vulnerability auditing are not claimed."
+  ]
+}

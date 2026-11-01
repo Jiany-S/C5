@@ -1,5 +1,7 @@
 # Independent subagent review — 2026-10-31
 
+> Historical review snapshot. See [Submission handoff](submission.md) for current deliverables and remaining steps.
+
 The user explicitly requested a subagent grade and notes to fix. A separate reviewer agent read the authoritative three-page assignment and independently inspected source, tests, research, reflection and CLI. It did not edit the project, read credentials or make paid calls. The primary agent implemented the fixes and performed the fresh full-suite/live validation.
 
 ## Reviewer verdict
@@ -25,9 +27,9 @@ The subagent independently ran four original protocol checks, thirteen revised C
 
 ## Additional finding from fresh live validation
 
-The primary agent's first revised live run completed all actual tool operations correctly but passed only **5/7** strict scenarios because the model omitted IDs from two answers. The deterministic interface receipts still displayed both committed IDs. This failed-prose run is preserved unchanged as `evidence/live_agent_review.json`.
+The primary agent's first revised live run completed all actual tool operations correctly but passed only **5/7** strict scenarios because the model omitted IDs from two answers. The deterministic interface receipts still displayed both committed IDs. This failed-prose run is preserved unchanged as `evidence/history/live_agent_review.json`.
 
-The reviewer endorsed a concrete fix: include the committed ID in the Action's human-readable `message` as well as its typed `record_id`, and require a separate `Record ID:` line in successful/duplicate model answers. The fix preserves tool responsibilities and evaluation criteria. The subsequent fresh run passed **7/7**, saved in `evidence/live_agent_review_final.json` and promoted to the current `evidence/live_agent.json` after manual answer review. The original passing 2026-10-30 run is retained separately.
+The reviewer endorsed a concrete fix: include the committed ID in the Action's human-readable `message` as well as its typed `record_id`, and require a separate `Record ID:` line in successful/duplicate model answers. The fix preserves tool responsibilities and evaluation criteria. The subsequent fresh run passed **7/7**, saved in `evidence/history/live_agent_review_final.json` and promoted to the current `evidence/live_agent.json` after manual answer review. The original passing 2026-10-30 run is retained separately.
 
 The reviewer explicitly advised against repeatedly rerunning unchanged code until a lucky pass, or silently appending an ID and calling it model-generated text. The application instead keeps its reliable MCP receipt visibly separate from Mira's answer. Natural-language checks remain heuristics and do not prove universal model behavior.
 

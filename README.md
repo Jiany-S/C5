@@ -1,20 +1,30 @@
 # CedarBridge C5 MCP Toolkit
 
-EECE 503P/798S: Agentic Systems, Fall 2026, American University of Beirut. A standalone progression from the fictional [C3 CedarBridge concept](https://github.com/Jiany-S/C3), with no dependency on its application code.
+EECE 503P/798S: Agentic Systems, Fall 2026, American University of Beirut.
 
-Mira uses the **OpenAI Agents SDK** to discover and invoke exactly **three FastMCP tools** over a real stdio connection. The business facts are local; OpenAI is the only API needed for the agent demonstration.
+CedarBridge is a fictional student-project coaching business. Its assistant, Mira, uses the **OpenAI Agents SDK** to discover and invoke exactly **three FastMCP tools** over stdio. Facts come from a local JSON catalog; follow-up interests are stored in SQLite. C5 runs independently of the earlier [C3 project](https://github.com/Jiany-S/C3).
 
-| Category | Tool | What it does |
+| Category | Tool | Responsibility |
 |---|---|---|
-| Data | `get_service_details(service_name)` | Reads deterministic published service facts |
-| Action | `record_service_interest(name, email, service_name, notes, follow_up_requested)` | Saves explicit follow-up interest in SQLite and returns the committed record ID |
-| Orchestration | `register_verified_service_interest(name, email, service_name, notes, follow_up_requested)` | Runs lookup, then conditionally records interest, returning the actual sequence |
+| Data | `get_service_details(service_name)` | Read service facts without changing records |
+| Action | `record_service_interest(name, email, service_name, notes, follow_up_requested)` | Save explicitly requested follow-up interest and return its committed ID |
+| Orchestration | `register_verified_service_interest(name, email, service_name, notes, follow_up_requested)` | Verify the service, then conditionally save interest and return the actual sequence |
 
-All inputs are typed; the output is a Pydantic `ToolResult`. Recording never books an appointment, sends an email, or takes payment. Duplicate normalized email/service pairs return their existing ID without inserting or updating. See [tool contracts](docs/tool_design.md) and [architecture](docs/architecture.md).
+Inputs are typed; outputs use a Pydantic `ToolResult`. Failures have explicit outcomes. Repeated normalized email/service pairs return the existing ID without inserting or updating. Recording never books an appointment, sends email or takes payment.
 
-## Install from a clean environment
+## Submission documents
 
-Python **3.11** was tested on Windows. Run commands from this directory. There is no need to start a separate server terminal: the client owns the subprocess.
+- [Research summary](docs/mcp_research_summary.md): 371 words, excluding title and references.
+- [Reflection](docs/reflection.md): two paragraphs on boundaries, challenges and future work.
+- [Architecture](docs/architecture.md) and [tool contracts](docs/tool_design.md).
+- [Requirements and evidence](docs/compliance_report.md).
+- [Submission handoff and video status](docs/submission.md).
+
+Repository: [Jiany-S/C5](https://github.com/Jiany-S/C5), verified public on 2026-11-01. A screencast is recorded locally; its hosted sharing link is still pending. Recordings are delivered separately from source.
+
+## Install
+
+Python **3.11 on Windows** is the tested environment. Run these PowerShell commands from the C5 directory:
 
 ```powershell
 python -m venv .venv
@@ -22,11 +32,9 @@ python -m venv .venv
 .venv\Scripts\python.exe -m pip check
 ```
 
-The complete lock includes development dependencies and a Windows-only marker for pywin32. Alternatively, `requirements.txt` pins direct runtime packages and `requirements-dev.txt` adds tests. FastMCP 4.1.4, MCP Python SDK 2.3.0, Agents SDK 0.24.0 and OpenAI SDK 3.41.0 were current available releases checked on 2026-10-30. Pins reproduce the tested APIs rather than silently adopting future breaking changes.
+The lock reproduces the tested FastMCP 4.1.4, MCP Python SDK 2.3.0, OpenAI Agents SDK 0.24.0 and OpenAI SDK 3.41.0 environment. Direct runtime pins are in `requirements.txt`; `requirements-dev.txt` adds tests. The lock's pywin32 entry is Windows-only. On macOS/Linux replace `.venv\Scripts\python.exe` with `.venv/bin/python`; those platforms have not been tested here. No Node.js, browser, GPU or additional service is needed to run the project.
 
-On macOS/Linux use `.venv/bin/python` in place of `.venv\Scripts\python.exe`. Those systems have not been executed in this submission's validation. No notebook, Node.js, browser, GPU or extra service is required.
-
-## Verify MCP without credentials
+## Verify without an API key
 
 ```powershell
 .venv\Scripts\python.exe agent_client.py --list-tools
@@ -34,92 +42,85 @@ On macOS/Linux use `.venv/bin/python` in place of `.venv\Scripts\python.exe`. Th
 .venv\Scripts\python.exe -m pytest -q
 ```
 
-`--list-tools` shows a concise table of the actual discovered tools and categories. Use `--schemas` for complete machine-readable JSON schemas, or `--trace` to include raw result JSON and server capability events. The protocol demo starts a real server and calls all three tools, including failure, duplicate and no-consent cases, in an automatically removed temporary store. It does **not** use a model and is labeled accordingly. The pytest suite also uses temporary stores.
+Discovery connects to a real FastMCP subprocess. The protocol demo calls all three tools and checks failures, consent and duplicates in a temporary store. It uses **no model**. Tests also use temporary stores. Scripted-model SDK tests are labeled separately from real OpenAI calls.
 
-## Configure the live OpenAI agent
+## Run the live agent
 
-Create `.env` from `.env.example` if it does not already exist, then fill `OPENAI_API_KEY` locally. Edit an existing `.env` without overwriting its contents. Never paste a key into a chat prompt or Git. The host loads only C5's `.env`, never another project's file. An existing shell `OPENAI_API_KEY` takes precedence. `OPENAI_MODEL` defaults to `gpt-4.1-mini`, which was used for the saved real tests.
+Create `.env` only if it does not exist, then edit it locally to set `OPENAI_API_KEY`:
 
 ```powershell
 if (-not (Test-Path .env)) { Copy-Item .env.example .env }
-# Edit .env locally to configure the key. Then:
 .venv\Scripts\python.exe agent_client.py
 ```
 
-Interactive prompt example:
+An existing shell key takes precedence over C5's `.env`. The default model is `gpt-4.1-mini`, used in the saved live evidence. The host starts and closes the MCP server automatically; do not start another server terminal.
+
+Try:
 
 ```text
 What does Project Clarity cost, how long is it, and how is it delivered? I only want information.
 ```
 
-The welcome panel shows the model, record directory and available commands. Normal output separates actual MCP receipts from Mira's model-generated answer. A receipt always shows the returned record ID, even if model wording varies.
-
 | Chat command | Effect |
 |---|---|
-| `/help` | Show how to use the assistant |
-| `/examples` | Show three copy-paste requests |
-| `/tools` | Show actual server-discovered tools |
-| `/records` | Inspect saved IDs and services; contacts remain hidden |
-| `/new` | Clear conversation history; saved interests remain |
-| `/quit` | Close the connection; `quit` and `exit` also work |
+| `/help` | Explain the interface |
+| `/examples` | Show three complete example requests |
+| `/tools` | Discover the actual registered tools |
+| `/records` | Inspect saved services and IDs, with contacts hidden |
+| `/new` | Clear chat history while retaining saved interests |
+| `/quit` | Close the session; `quit` and `exit` also work |
 
-One request can run with `--prompt "..."`; blank one-shot prompts are rejected. `--data-dir runtime/my-demo` selects a separate local store. All relative data paths, including inspector paths, start at the C5 project directory. Missing-key errors give setup instructions; an individual chat error allows recovery without closing the session. `/records` is a local operator command, not a fourth MCP tool available to the agent.
+Actual MCP receipts show returned outcomes and IDs separately from Mira's model-generated answer. `/records` is a local operator command, not a fourth MCP tool. Use `--prompt "..."` for one request, `--data-dir runtime/my-demo` for an isolated store, `--schemas` for full discovered schemas, or `--trace` for raw MCP results and server events. Relative record paths start at the C5 directory.
 
-## Live demonstration and evidence
+## Demonstrate all three tools
 
 ```powershell
-.venv\Scripts\python.exe -m scripts.live_demo
-# For the 5–7-minute recording, pause before every case:
 .venv\Scripts\python.exe -m scripts.live_demo --step
 ```
 
-Each run creates a fresh ignored `runtime/demo-...` directory, prints it, and sends the seven tested prompts to the real model. It prints actual client boundary events, server capability outcomes, the model's answer, and read-only persistence proof. Model routing is automatic; there is no `tool_choice` override or local function bypass. The retry case may safely use either writing interface. The dedicated Action and Orchestration cases each require the respective tool.
+Press Enter to run each case or `q` to stop. The seven tested cases cover Data, Action, Orchestration, failed lookup, duplicates, information with contact details, and invalid email. Each run creates a fresh store and report under ignored `runtime/demo-.../`. Reports preserve partial failures and cancellations. Routing is model-selected; no `tool_choice` override or local-function bypass is used.
 
-The step view labels progress as 1/7 through 7/7. Press Enter to run a case or `q` to stop; EOF also stops safely. Compact receipts show the actual outcome and orchestration sequence. Add `--trace` for full JSON and server-side event logs.
-
-By default each new run saves `runtime/demo-.../live_report.json`, preserving the supplied submission evidence. Reports are saved atomically before execution, after each case and on failure/cancellation. An interrupted run is marked incomplete and cannot inherit an earlier pass. To intentionally create a new submission report, use `--output evidence/my-reviewed-run.json`. Automated prose checks are heuristics; review final model answers before recording.
-
-Results from final validation:
-
-- **49 passed, 1 skipped** in ordinary pytest: 29 protocol tests, 6 scripted-model SDK tests, 6 CLI/configuration tests and 8 evidence/evaluation tests passed. The opt-in paid API test was skipped there.
-- **7/7 real OpenAI scenarios passed** separately: Data, Action, Orchestration, failed lookup, duplicate, information with contact details, and invalid email. Two records were created; all later cases retained the count of two.
-- **7/7 protocol-demo cases passed** with no model or key.
-- Research main summary: **371 whitespace-delimited words**, within 300–400. Reflection: **2 paragraphs**.
-
-Inspect [final live results](evidence/live_agent.json), [actual discovery and protocol calls](evidence/protocol.json), [pytest XML](evidence/pytest.xml), and the [strict compliance report](docs/compliance_report.md). Initial live reports are intentionally preserved and marked `passed=false`; they document limitations found during refinement. The test fixture's scripted model is explicitly labeled and is not evidence of real model selection.
-
-The [independent subagent review](docs/independent_review.md) rated the revised technical/written work at approximately **95/100 unofficially**, while correctly keeping the full submission incomplete without its video and links. Its findings led to stronger validation, consistent inspector configuration, more reliable evidence and a clearer CLI. [Interface review](docs/interface_review.md) includes narrow-terminal previews and tested user flows.
-
-The [extracted-archive check](evidence/archive_reproduction.json) also passed discovery from an outside working directory and all seven protocol cases using an extracted source copy with the same tested dependency environment. It does not claim a second dependency installation.
-
-To run the paid live scenario as part of pytest, configure your key and set `RUN_LIVE_TESTS=1` before running pytest. Normal tests never incur API charges. The standalone live demo is the recommended evidence-producing command.
-
-## Inspect saved records
-
-Use the directory printed by the live demo:
+Inspect the directory printed by the demo:
 
 ```powershell
 .venv\Scripts\python.exe -m scripts.inspect_records --data-dir runtime/demo-REPLACE_WITH_PRINTED_ID
 ```
 
-The inspection script uses SQLite read-only mode and shows IDs, services, timestamps and consent flags. It hides contact details and notes. Runtime SQLite files contain customer-supplied data and are ignored by Git. For demonstrations use fictional names and example.com emails only. The operator controls local file access and retention.
+The inspector opens SQLite read-only and hides contact details and notes. The [recording plan](docs/video_demo_plan.md) contains exact tested prompts and explanations. Its caption file is a draft, not subtitles aligned to the final recording.
 
-## Recording and submission
+## Validation evidence
 
-Follow [the exact 6-minute recording plan](docs/video_demo_plan.md), including the successfully tested prompts. Silent recording with readable captions is supported by the plan; the PDF specifies a screencast but does not explicitly require narration. This is an interpretation of the wording, not an instructor's approval of a particular format.
+- Ordinary suite: **49 passed, 1 skipped**. The skip is the opt-in paid API test.
+- Saved real OpenAI run: **7/7 scenarios passed**, with actual MCP calls and two persisted records.
+- Protocol demo: **7/7 cases passed** without a model or key.
+- Research summary: **371 words**; reflection: **two paragraphs**.
 
-The code, research, reflection and execution evidence are prepared. **The actual video and published repository/video links remain outstanding.** No video is fabricated and no repository has been published. Read [submission steps](docs/submission.md) before uploading anything. The course PDFs/notebooks are referenced, not redistributed.
+See the [evidence index](evidence/README.md), [current validation](docs/submission_review.md), and [compliance matrix](docs/compliance_report.md). Earlier failed and intermediate reports remain unchanged under `evidence/history/` and are not counted as current passes. Model-answer checks are heuristics, reviewed alongside actual tool outcomes.
 
-## Troubleshooting and limits
+Set `RUN_LIVE_TESTS=1` with a configured key to enable the optional paid pytest case. Normal pytest does not make paid calls. The standalone live demo is recommended for a new evidence report.
 
-- A server disconnect at startup usually means wrong dependencies or working directory. Install the pins and use the supplied client. Current FastMCP's `FASTMCP_CHECK_FOR_UPDATES` takes `off`, not `false`; the client sets it correctly.
-- API authentication, quota, network or model-access problems do not affect credential-free MCP tests. Verify the local key and account access; the CLI suppresses provider exception bodies to avoid leaking credentials or request data.
-- The server's stdout is reserved for MCP. With `--trace`, business logs go to stderr and the client adds raw JSON. Compact mode displays client receipts for actual calls. Do not add ordinary `print()` calls inside server functions.
-- Unknown services and invalid contacts return structured failures. Schema violations return MCP errors. Inspect `status/code` as well as `is_error`; domain errors are valid structured results.
-- Repeating an email/service does not update notes. One outstanding interest per pair is a deliberate scope limit. There is no booking calendar, email, authentication, automatic retention or contact-ownership verification.
-- Consent is asserted by a trusted local host; a malicious MCP client can lie about it. Model instructions do not guarantee perfect routing or prose under arbitrary adversarial inputs. The saved tests show observed behavior for specified cases, not a universal guarantee.
-- Windows/Python 3.11 is tested. Other operating systems and Python versions are not claimed as executed.
+## Scope and troubleshooting
 
-## Project contents
+- Install the lock if startup fails; `--list-tools` works without a key. The child uses `FASTMCP_CHECK_FOR_UPDATES=off` for the tested FastMCP version.
+- Server stdout is reserved for MCP. Trace-mode business events use stderr. Check domain `status/code` as well as MCP `is_error`.
+- Authentication, quota and network failures have safe recovery messages. Raw provider and storage exception bodies are not printed.
+- Consent is asserted by a trusted local host, not authenticated identity proof. There is no booking calendar, email delivery, contact-ownership verification or automatic retention.
+- The OpenAI model receives the conversation and necessary tool arguments. Cloud tracing is disabled; the server receives no OpenAI key. Use fictional names and example.com contacts in demonstrations.
+- Runtime databases retain contact information locally. Keep stores, `.env`, environments and recordings outside Git and the source ZIP. Windows/Python 3.11 is validated; arbitrary adversarial prompts and other platforms are not claimed as tested.
 
-`mcp_server.py`: three registered tools; `business.py`: typed contracts, catalog and transactions; `agent_client.py`: actual Agents SDK MCP host; `terminal_ui.py`: readable receipts and chat presentation; `config.py`: consistent local paths; `scripts/`: protocol/live demo, read-only inspector, interface preview and packaging; `tests/`: protocol, scripted-model SDK, CLI recovery and evidence checks; `docs/`: research, contracts, architecture, reflection, reviews and recording plan; `evidence/`: synthetic execution reports and source provenance.
+## Source layout
+
+```text
+agent_client.py        Agents SDK host, MCP connection and CLI
+mcp_server.py          Exactly three registered FastMCP tools
+business.py            Typed results, catalog lookup and SQLite transaction
+config.py              Shared project-relative record paths
+terminal_ui.py         Chat presentation and actual MCP receipts
+business_data/         Fictional read-only service catalog
+scripts/               Protocol/live demos, inspector and source packaging
+tests/                 Real MCP, scripted SDK, CLI and evidence checks
+docs/                  Research, reflection, architecture and submission review
+evidence/              Current evidence and labeled historical reports
+```
+
+Build the source ZIP with `.venv\Scripts\python.exe -m scripts.package_submission`. Its allowlist excludes secrets, databases, environments, caches, recordings and course materials.

@@ -1,20 +1,19 @@
 # Recording plan: target 6 minutes 20 seconds
 
-The actual screencast remains to be recorded. This plan uses seven scenarios successfully run with `gpt-4.1-mini` through the actual OpenAI Agents SDK and FastMCP subprocess; see `evidence/live_agent.json`. Responses and UUIDs may vary on a new run. Never replace a failed live round trip with fabricated terminal output.
+A screencast has now been recorded. This document remains a rehearsal/reference plan; its original timeline and caption draft are not aligned subtitles for the final export. See [current video status](submission.md). This plan uses seven scenarios successfully run with `gpt-4.1-mini` through the actual OpenAI Agents SDK and FastMCP subprocess; see `evidence/live_agent.json`. Responses and UUIDs may vary on a new run. Never replace a failed live round trip with fabricated terminal output.
 
 The assignment requires a 5–7-minute screencast and does not explicitly require spoken narration. A silent recording with readable on-screen captions can convey each specified point. `demo_captions.srt` provides a caption draft matching this timeline; align its timing to the actual recording. This is a reading of the assignment, not a statement that the instructor has approved this format.
 
 ## Prepare before recording
 
-1. Configure a local C5 `.env` key or the shell's `OPENAI_API_KEY`; do not show its contents. The implementation-time key was read into memory from an authorized existing local file and was not copied into C5.
+1. Configure a local C5 `.env` key or the shell's `OPENAI_API_KEY`; do not show its contents. The host reads only local C5 configuration; the credential file is ignored and excluded from the source archive.
 2. Install the locked environment and verify `python -m pytest -q` using the venv interpreter. The saved evidence is 49 passed, 1 opt-in live test skipped; the live demo is tested separately.
-3. Obtain approval before publishing the standalone repository. Insert its real verified URL into `docs/submission.md`. No repository URL is claimed yet.
+3. The repository is public at https://github.com/Jiany-S/C5 and its URL is recorded in `docs/submission.md`. Keep credentials and runtime records out of Git.
 4. Use a 1080p recording, readable terminal font, word wrap, and a split view of terminal plus README/architecture/code. Hide notifications. Keep only invented names and example.com contacts visible.
 5. Open `README.md`, `docs/architecture.md`, `mcp_server.py`, `business.py`, `evidence/pytest.xml`, and `docs/reflection.md`. Keep the caption draft available in the recording editor or on-screen notes.
 6. Use the actual live script, not the protocol-only script, for the required agent demonstration:
 
 ```powershell
-cd 'C:\Users\jijos\Desktop\EECE 503P\C5'
 .venv\Scripts\python.exe -m scripts.live_demo --step
 ```
 

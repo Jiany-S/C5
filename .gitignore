@@ -12,3 +12,12 @@ runtime/
 dist/
 .coverage
 htmlcov/
+
+# Recordings and local media-editing assets are delivered separately from source.
+*.mkv
+*.mp4
+*.mov
+*.webm
+*.wav
+*.mp3
+*.bin
